@@ -226,3 +226,22 @@
     background-clip: text;
   }
 }
+
+.mouse-follower {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.mouse-follower.hover {
+  transform: translate(-50%, -50%) scale(1.5);
+  background: rgba(0, 0, 0, 0.2);
+}

@@ -1,91 +1,357 @@
-import { ArrowRight, TrendingUp, Users, Award } from "lucide-react";
+"use client";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import { motion, AnimatePresence, cubicBezier } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const Hero = () => {
-  const stats = [
-    { icon: TrendingUp, label: "Years of Growth", value: "15+" },
-    { icon: Users, label: "Successful Projects", value: "200+" },
-    { icon: Award, label: "Sectors Covered", value: "5+" },
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const heroImages = [
+    {
+      src: "/assets/hero-agriculture.jpg",
+      alt: "Modern Agricultural Farming in Ghana",
+      title: "Agricultural Excellence",
+    },
+    {
+      src: "/assets/hero-poultry.jpg",
+      alt: "Modern Poultry Farming Operations",
+      title: "Poultry Innovation",
+    },
+    {
+      src: "/assets/hero-real-estate.jpg",
+      alt: "Modern Student Housing Development",
+      title: "Real Estate Development",
+    },
+    {
+      src: "/assets/hero-investment.jpg",
+      alt: "Investment Portfolio Growth",
+      title: "Strategic Investments",
+    },
   ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [heroImages.length]);
+
+  const textVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: cubicBezier(0.6, -0.05, 0.01, 0.99),
+      },
+    },
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const buttonVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: cubicBezier(0.6, -0.05, 0.01, 0.99),
+      },
+    },
+    hover: {
+      scale: 1.05,
+      transition: {
+        type: "spring" as const,
+        stiffness: 400,
+        damping: 10,
+      },
+    },
+  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
       <div className="absolute inset-0">
-        <Image
-          src="/assets/hero-agriculture.jpg"
-          alt="Ghana Agricultural Investment"
-          className="w-full h-full object-cover"
-          width={80}
-          height={80}
-        />
-        <div className="absolute inset-0 hero-gradient"></div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentImageIndex}
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              transition: {
+                duration: 1.5,
+                ease: "easeInOut",
+              },
+            }}
+            exit={{
+              opacity: 0,
+              transition: {
+                duration: 0.8,
+              },
+            }}
+          >
+            <Image
+              src={heroImages[currentImageIndex].src}
+              alt={heroImages[currentImageIndex].alt}
+              className="w-full h-full object-cover"
+              fill
+              priority
+              quality={90}
+              style={{
+                filter: "brightness(0.4) contrast(1.1) saturate(0.9)",
+              }}
+            />
+          </motion.div>
+        </AnimatePresence>
+
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(135deg, hsla(140, 60%, 20%, 0.7) 0%, hsla(140, 60%, 20%, 0.5) 50%, hsla(140, 70%, 15%, 0.8) 100%)",
+          }}
+        ></div>
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, hsla(25, 60%, 55%, 0.35) 0%, transparent 40%, transparent 60%, hsla(25, 60%, 55%, 0.35) 100%)",
+          }}
+        ></div>
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, transparent 20%, hsla(140, 60%, 10%, 0.3) 70%)",
+          }}
+        ></div>
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, transparent 0%, hsla(0, 0%, 0%, 0.4) 30%, hsla(0, 0%, 0%, 0.4) 70%, transparent 100%)",
+          }}
+        ></div>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 container-custom text-center text-white">
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* Main Heading */}
-          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
-            Diverse Investments in
-            <span className="block text-gradient-gold">
-              Ghana&apos;s Future
-            </span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-            Leading agricultural, poultry, and real estate investments across
-            Ghana. Building sustainable prosperity through diversified growth
-            strategies.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-            <Button
-              size="lg"
-              className="bg-secondary text-secondary-foreground hover:bg-secondary-hover px-8 py-4 text-lg font-semibold"
+      <motion.div
+        className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center"
+        style={{ color: "hsl(0, 0%, 98%)" }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <div className="max-w-5xl mx-auto space-y-8">
+          <motion.div variants={textVariants}>
+            <div
+              className="inline-flex items-center px-4 py-2 backdrop-blur-sm border rounded-full text-sm font-medium mb-6"
+              style={{
+                backgroundColor: "hsla(0, 0%, 100%, 0.15)",
+                borderColor: "hsla(0, 0%, 100%, 0.25)",
+                backdropFilter: "blur(12px)",
+              }}
             >
-              Explore Opportunities
-              <ArrowRight className="ml-2" size={20} />
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg"
-            >
-              Learn About Us
-            </Button>
-          </div>
+              <span
+                className="w-2 h-2 rounded-full mr-2 animate-pulse"
+                style={{ backgroundColor: "hsl(45, 85%, 65%)" }}
+              ></span>
+              {heroImages[currentImageIndex].title}
+            </div>
+          </motion.div>
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16">
-            {stats.map((stat) => (
-              <Card
-                key={stat.label}
-                className="glass border-white/20 hover-lift"
+          <motion.div variants={textVariants}>
+            <h1
+              className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight"
+              style={{
+                textShadow:
+                  "2px 4px 12px hsla(0, 0%, 0%, 0.7), 0 2px 4px hsla(0, 0%, 0%, 0.5)",
+              }}
+            >
+              Empowering Ghana Through
+              <span
+                className="block mt-2"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(45, 85%, 65%) 0%, hsl(45, 85%, 55%) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  textShadow: "none",
+                  filter: "drop-shadow(2px 4px 8px hsla(0, 0%, 0%, 0.5))",
+                }}
               >
-                <CardContent className="p-6 text-center">
-                  <stat.icon className="w-8 h-8 mx-auto mb-4 text-secondary" />
-                  <div className="text-3xl font-bold font-heading mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-white/80">{stat.label}</div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </div>
+                Diverse Investments
+              </span>
+            </h1>
+          </motion.div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white/70 rounded-full mt-2"></div>
+          <motion.div variants={textVariants}>
+            <p
+              className="text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed font-light"
+              style={{
+                color: "hsla(0, 0%, 98%, 0.95)",
+                textShadow: "1px 2px 8px hsla(0, 0%, 0%, 0.6)",
+              }}
+            >
+              Leading agricultural innovation, poultry excellence, and strategic
+              real estate development across Ghana.
+              <span
+                className="block mt-2 text-lg md:text-xl"
+                style={{
+                  color: "hsla(0, 0%, 98%, 0.85)",
+                  textShadow: "1px 2px 8px hsla(0, 0%, 0%, 0.6)",
+                }}
+              >
+                Building sustainable prosperity through diversified growth
+                strategies.
+              </span>
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-12"
+            variants={containerVariants}
+          >
+            <motion.div variants={buttonVariants} whileHover="hover">
+              <Button
+                size="lg"
+                className="font-semibold px-10 py-4 text-lg shadow-xl transition-all duration-300 rounded-xl"
+                style={{
+                  backgroundColor: "hsl(45, 85%, 65%)",
+                  color: "hsl(140, 8%, 15%)",
+                  boxShadow: "0 10px 30px hsla(45, 85%, 65%, 0.3)",
+                }}
+                onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  const target = e.target as HTMLElement;
+                  target.style.backgroundColor = "hsl(45, 85%, 55%)";
+                  target.style.boxShadow =
+                    "0 15px 40px hsla(45, 85%, 65%, 0.4)";
+                  target.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  const target = e.target as HTMLElement;
+                  target.style.backgroundColor = "hsl(45, 85%, 65%)";
+                  target.style.boxShadow =
+                    "0 10px 30px hsla(45, 85%, 65%, 0.3)";
+                  target.style.transform = "translateY(0px)";
+                }}
+              >
+                Explore Opportunities
+                <ArrowRight className="ml-2" size={20} />
+              </Button>
+            </motion.div>
+
+            <motion.div variants={buttonVariants} whileHover="hover">
+              <Button
+                variant="outline"
+                size="lg"
+                className="px-10 py-4 text-lg font-medium rounded-xl transition-all duration-300"
+                style={{
+                  borderWidth: "2px",
+                  borderColor: "hsla(0, 0%, 100%, 0.4)",
+                  backgroundColor: "hsla(0, 0%, 100%, 0.1)",
+                  backdropFilter: "blur(12px)",
+                  color: "hsl(0, 0%, 98%)",
+                }}
+                onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  const target = e.target as HTMLElement;
+                  target.style.backgroundColor = "hsla(0, 0%, 100%, 0.2)";
+                  target.style.borderColor = "hsla(0, 0%, 100%, 0.6)";
+                  target.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  const target = e.target as HTMLElement;
+                  target.style.backgroundColor = "hsla(0, 0%, 100%, 0.1)";
+                  target.style.borderColor = "hsla(0, 0%, 100%, 0.4)";
+                  target.style.transform = "translateY(0px)";
+                }}
+              >
+                Learn About Us
+              </Button>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            className="flex justify-center space-x-3 pt-16"
+            variants={textVariants}
+          >
+            {heroImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentImageIndex(index)}
+                className="w-3 h-3 rounded-full transition-all duration-300"
+                style={{
+                  backgroundColor:
+                    index === currentImageIndex
+                      ? "hsl(45, 85%, 65%)"
+                      : "hsla(0, 0%, 100%, 0.3)",
+                  boxShadow:
+                    index === currentImageIndex
+                      ? "0 0 12px hsla(45, 85%, 65%, 0.5)"
+                      : "none",
+                }}
+                onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  const target = e.target as HTMLElement;
+                  if (index !== currentImageIndex) {
+                    target.style.backgroundColor = "hsla(0, 0%, 100%, 0.5)";
+                  }
+                }}
+                onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  const target = e.target as HTMLElement;
+                  if (index !== currentImageIndex) {
+                    target.style.backgroundColor = "hsla(0, 0%, 100%, 0.3)";
+                  }
+                }}
+                aria-label={`View ${heroImages[index].title}`}
+              />
+            ))}
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
+
+      <motion.div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.6 }}
+      >
+        <motion.div
+          className="w-6 h-10 border-2 rounded-full flex justify-center cursor-pointer transition-colors"
+          style={{
+            borderColor: "hsla(0, 0%, 100%, 0.6)",
+          }}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
+            const target = e.target as HTMLElement;
+            target.style.borderColor = "hsla(0, 0%, 100%, 0.8)";
+          }}
+          onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
+            const target = e.target as HTMLElement;
+            target.style.borderColor = "hsla(0, 0%, 100%, 0.6)";
+          }}
+        >
+          <div
+            className="w-1 h-3 rounded-full mt-2"
+            style={{ backgroundColor: "hsla(0, 0%, 100%, 0.7)" }}
+          ></div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

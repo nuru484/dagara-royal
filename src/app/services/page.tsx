@@ -1,3 +1,4 @@
+"use client";
 import Services from "@/components/Services";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,33 +9,111 @@ import {
   Users,
   Award,
   Target,
+  Sparkles,
+  Download,
+  Calendar,
 } from "lucide-react";
+import { motion, Variants } from "framer-motion";
+import { useState } from "react";
 
 const ServicesPage = () => {
+  const [hoveredBenefit, setHoveredBenefit] = useState<number | null>(null);
+  const [hoveredProcess, setHoveredProcess] = useState<number | null>(null);
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.6, -0.05, 0.01, 0.99],
+      },
+    },
+  };
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.95, y: 20 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.6, -0.05, 0.01, 0.99],
+      },
+    },
+    hover: {
+      y: -8,
+      scale: 1.02,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const iconVariants: Variants = {
+    rest: { rotate: 0, scale: 1 },
+    hover: {
+      rotate: 360,
+      scale: 1.1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  const stepVariants: Variants = {
+    rest: { scale: 1 },
+    hover: { scale: 1.1, transition: { duration: 0.3, ease: "easeOut" } },
+  };
+
   const benefits = [
     {
       icon: TrendingUp,
       title: "Proven Returns",
       description:
         "Consistent growth with average annual returns of 12-15% across our investment portfolio.",
+      color: "hsl(142, 76%, 36%)",
+      gradient:
+        "linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(140, 60%, 20%) 100%)",
     },
     {
       icon: Users,
       title: "Expert Team",
       description:
         "Experienced professionals with decades of combined experience in their respective fields.",
+      color: "hsl(25, 60%, 55%)",
+      gradient:
+        "linear-gradient(135deg, hsl(25, 60%, 55%) 0%, hsl(20, 70%, 45%) 100%)",
     },
     {
       icon: Award,
       title: "Industry Recognition",
       description:
         "Multiple awards for innovation, sustainability, and excellence in investment management.",
+      color: "hsl(210, 70%, 50%)",
+      gradient:
+        "linear-gradient(135deg, hsl(210, 70%, 50%) 0%, hsl(220, 60%, 45%) 100%)",
     },
     {
       icon: Target,
       title: "Strategic Focus",
       description:
         "Targeted investments in high-growth sectors with strong fundamentals and market demand.",
+      color: "hsl(280, 70%, 50%)",
+      gradient:
+        "linear-gradient(135deg, hsl(280, 70%, 50%) 0%, hsl(270, 60%, 45%) 100%)",
     },
   ];
 
@@ -44,55 +123,126 @@ const ServicesPage = () => {
       title: "Market Analysis",
       description:
         "Comprehensive research and analysis of market opportunities and trends.",
+      color: "hsl(142, 76%, 36%)",
     },
     {
       step: "02",
       title: "Due Diligence",
       description:
         "Thorough evaluation of potential investments, risks, and growth prospects.",
+      color: "hsl(25, 60%, 55%)",
     },
     {
       step: "03",
       title: "Strategic Planning",
       description:
         "Development of detailed investment strategies and implementation plans.",
+      color: "hsl(210, 70%, 50%)",
     },
     {
       step: "04",
       title: "Execution & Management",
       description:
         "Professional project management and ongoing performance monitoring.",
+      color: "hsl(280, 70%, 50%)",
     },
     {
       step: "05",
       title: "Value Creation",
       description:
         "Active management to maximize returns and create sustainable value.",
+      color: "hsl(340, 70%, 50%)",
     },
     {
       step: "06",
       title: "Exit Strategy",
       description:
         "Strategic exit planning to optimize returns for all stakeholders.",
+      color: "hsl(45, 85%, 65%)",
     },
   ];
 
+  const investmentCriteria = [
+    "Strong market fundamentals and growth potential",
+    "Sustainable business models with positive impact",
+    "Experienced management teams and local partnerships",
+    "Clear path to profitability and value creation",
+    "Alignment with Ghana's economic development goals",
+    "Environmental and social responsibility standards",
+  ];
+
   return (
-    <div className="pt-8">
+    <div className="relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="fixed inset-0 opacity-[0.02] pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, hsl(45, 85%, 65%) 2px, transparent 2px), 
+                           radial-gradient(circle at 75% 75%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
+            backgroundSize: "60px 60px, 40px 40px",
+          }}
+        />
+      </div>
+
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-primary/5 to-accent/5">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="font-heading text-5xl md:text-6xl font-bold mb-6">
-              Our Investment
-              <span className="text-gradient-primary"> Services</span>
-            </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+      <section
+        className="relative pt-32 pb-24"
+        style={{
+          background:
+            "linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(140, 10%, 98%) 100%)",
+        }}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          <motion.div
+            className="max-w-4xl mx-auto text-center"
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+          >
+            <motion.div variants={itemVariants}>
+              <div
+                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-8"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(45, 85%, 65%) 0%, hsl(25, 60%, 55%) 100%)",
+                  color: "hsl(140, 8%, 15%)",
+                }}
+              >
+                <Sparkles size={16} />
+                <span className="font-medium text-sm">Investment Services</span>
+              </div>
+            </motion.div>
+
+            <motion.h1
+              className="font-serif text-5xl md:text-7xl font-bold mb-8 leading-tight"
+              style={{ color: "hsl(140, 8%, 15%)" }}
+              variants={itemVariants}
+            >
+              Our Investment{" "}
+              <span
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(140, 60%, 20%), hsl(25, 60%, 55%))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                Services
+              </span>
+            </motion.h1>
+
+            <motion.p
+              className="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto"
+              style={{ color: "hsl(140, 5%, 45%)" }}
+              variants={itemVariants}
+            >
               Comprehensive investment solutions across agriculture, real
               estate, and emerging sectors designed to create sustainable wealth
               and drive economic growth in Ghana.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
@@ -100,140 +250,423 @@ const ServicesPage = () => {
       <Services />
 
       {/* Why Choose Us */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-              Why Partner
-              <span className="text-gradient-primary"> With Us</span>
-            </h2>
-            <p className="text-xl text-muted-foreground">
+      <section
+        className="relative py-24"
+        style={{ backgroundColor: "hsl(140, 10%, 96%)" }}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <motion.div
+            className="text-center max-w-3xl mx-auto mb-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={containerVariants}
+          >
+            <motion.div variants={itemVariants}>
+              <div
+                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-6"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(45, 85%, 65%) 0%, hsl(25, 60%, 55%) 100%)",
+                  color: "hsl(140, 8%, 15%)",
+                }}
+              >
+                <Award size={16} />
+                <span className="font-medium text-sm">Why Choose Us</span>
+              </div>
+            </motion.div>
+
+            <motion.h2
+              className="font-serif text-4xl md:text-6xl font-bold mb-6"
+              style={{ color: "hsl(140, 8%, 15%)" }}
+              variants={itemVariants}
+            >
+              Why Partner{" "}
+              <span
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(140, 60%, 20%), hsl(25, 60%, 55%))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                With Us
+              </span>
+            </motion.h2>
+
+            <motion.p
+              className="text-xl"
+              style={{ color: "hsl(140, 5%, 45%)" }}
+              variants={itemVariants}
+            >
               Our track record, expertise, and commitment to excellence set us
               apart in the investment landscape.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit) => (
-              <Card
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {benefits.map((benefit, index) => (
+              <motion.div
                 key={benefit.title}
-                className="border-0 shadow-soft hover-lift text-center"
+                variants={cardVariants}
+                whileHover="hover"
+                onHoverStart={() => setHoveredBenefit(index)}
+                onHoverEnd={() => setHoveredBenefit(null)}
               >
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-6">
-                    <benefit.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="font-heading text-xl font-bold mb-4">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {benefit.description}
-                  </p>
-                </CardContent>
-              </Card>
+                <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full">
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
+                    style={{ background: benefit.gradient }}
+                  />
+                  <CardContent className="p-8 relative h-full flex flex-col justify-center">
+                    <motion.div
+                      className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
+                      style={{
+                        background: benefit.gradient,
+                        color: "hsl(0, 0%, 98%)",
+                      }}
+                      variants={iconVariants}
+                      initial="rest"
+                      animate={hoveredBenefit === index ? "hover" : "rest"}
+                    >
+                      <benefit.icon size={24} />
+                    </motion.div>
+                    <h3
+                      className="font-serif text-xl font-bold mb-4"
+                      style={{ color: "hsl(140, 8%, 15%)" }}
+                    >
+                      {benefit.title}
+                    </h3>
+                    <p
+                      className="leading-relaxed"
+                      style={{ color: "hsl(140, 5%, 45%)" }}
+                    >
+                      {benefit.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Investment Process */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-              Our Investment
-              <span className="text-gradient-primary"> Process</span>
-            </h2>
-            <p className="text-xl text-muted-foreground">
+      <section
+        className="relative py-24"
+        style={{
+          background:
+            "linear-gradient(135deg, hsl(140, 10%, 96%) 0%, hsl(0, 0%, 100%) 100%)",
+        }}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          <motion.div
+            className="text-center max-w-3xl mx-auto mb-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={containerVariants}
+          >
+            <motion.div variants={itemVariants}>
+              <div
+                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-6"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(45, 85%, 65%) 0%, hsl(25, 60%, 55%) 100%)",
+                  color: "hsl(140, 8%, 15%)",
+                }}
+              >
+                <Target size={16} />
+                <span className="font-medium text-sm">Investment Process</span>
+              </div>
+            </motion.div>
+
+            <motion.h2
+              className="font-serif text-4xl md:text-6xl font-bold mb-6"
+              style={{ color: "hsl(140, 8%, 15%)" }}
+              variants={itemVariants}
+            >
+              Our Investment{" "}
+              <span
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(140, 60%, 20%), hsl(25, 60%, 55%))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                Process
+              </span>
+            </motion.h2>
+
+            <motion.p
+              className="text-xl"
+              style={{ color: "hsl(140, 5%, 45%)" }}
+              variants={itemVariants}
+            >
               A systematic approach to identifying, evaluating, and managing
               investment opportunities for optimal returns.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
             {investmentProcess.map((process, index) => (
-              <Card
-                key={(process.step, index)}
-                className="border-0 shadow-soft hover-lift"
+              <motion.div
+                key={process.step}
+                variants={cardVariants}
+                whileHover="hover"
+                onHoverStart={() => setHoveredProcess(index)}
+                onHoverEnd={() => setHoveredProcess(null)}
               >
-                <CardContent className="p-8">
-                  <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center mr-4">
-                      <span className="text-white font-bold">
-                        {process.step}
-                      </span>
+                <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group h-full">
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
+                    style={{ backgroundColor: process.color }}
+                  />
+                  <CardContent className="p-8 relative">
+                    <div className="flex items-center mb-6">
+                      <motion.div
+                        className="w-12 h-12 rounded-full flex items-center justify-center mr-4"
+                        style={{
+                          backgroundColor: process.color,
+                          color: "hsl(0, 0%, 98%)",
+                        }}
+                        variants={stepVariants}
+                        initial="rest"
+                        animate={hoveredProcess === index ? "hover" : "rest"}
+                      >
+                        <span className="text-white font-bold text-sm">
+                          {process.step}
+                        </span>
+                      </motion.div>
+                      <h3
+                        className="font-serif text-xl font-bold"
+                        style={{ color: "hsl(140, 8%, 15%)" }}
+                      >
+                        {process.title}
+                      </h3>
                     </div>
-                    <h3 className="font-heading text-xl font-bold">
-                      {process.title}
-                    </h3>
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {process.description}
-                  </p>
-                </CardContent>
-              </Card>
+                    <p
+                      className="leading-relaxed"
+                      style={{ color: "hsl(140, 5%, 45%)" }}
+                    >
+                      {process.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Investment Criteria */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-6">
-              <h2 className="font-heading text-4xl md:text-5xl font-bold">
-                Investment
-                <span className="text-gradient-primary"> Criteria</span>
-              </h2>
-              <p className="text-xl text-muted-foreground leading-relaxed">
+      <section
+        className="relative py-24"
+        style={{ backgroundColor: "hsl(140, 10%, 96%)" }}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <motion.div
+            className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={containerVariants}
+          >
+            <motion.div className="space-y-8" variants={itemVariants}>
+              <motion.div
+                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(45, 85%, 65%) 0%, hsl(25, 60%, 55%) 100%)",
+                  color: "hsl(140, 8%, 15%)",
+                }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <CheckCircle size={16} />
+                <span className="font-medium text-sm">Investment Criteria</span>
+              </motion.div>
+
+              <motion.h2
+                className="font-serif text-4xl md:text-5xl font-bold leading-tight"
+                style={{ color: "hsl(140, 8%, 15%)" }}
+                variants={itemVariants}
+              >
+                Investment{" "}
+                <span
+                  style={{
+                    background:
+                      "linear-gradient(135deg, hsl(140, 60%, 20%), hsl(25, 60%, 55%))",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  Criteria
+                </span>
+              </motion.h2>
+
+              <motion.p
+                className="text-xl leading-relaxed"
+                style={{ color: "hsl(140, 5%, 45%)" }}
+                variants={itemVariants}
+              >
                 We focus on opportunities that align with our strategic vision
                 and meet our rigorous investment standards for sustainable
                 growth.
-              </p>
-              <div className="space-y-4">
-                {[
-                  "Strong market fundamentals and growth potential",
-                  "Sustainable business models with positive impact",
-                  "Experienced management teams and local partnerships",
-                  "Clear path to profitability and value creation",
-                  "Alignment with Ghana's economic development goals",
-                  "Environmental and social responsibility standards",
-                ].map((criteria) => (
-                  <div key={criteria} className="flex items-start space-x-3">
-                    <CheckCircle className="w-6 h-6 text-success mt-0.5 flex-shrink-0" />
-                    <span className="text-lg">{criteria}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+              </motion.p>
 
-            <Card className="bg-gradient-to-br from-primary to-accent text-primary-foreground border-0">
-              <CardContent className="p-12">
-                <h3 className="font-heading text-3xl font-bold mb-6">
-                  Ready to Explore Opportunities?
-                </h3>
-                <p className="text-primary-foreground/90 text-lg mb-8">
-                  Contact us to discuss how our investment services can help you
-                  achieve your financial goals and contribute to Ghana&apos;s
-                  growth.
-                </p>
-                <div className="space-y-4">
-                  <Button size="lg" variant="secondary" className="w-full">
-                    Schedule Consultation
-                    <ArrowRight className="ml-2" size={20} />
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+              <motion.div className="space-y-4" variants={itemVariants}>
+                {investmentCriteria.map((criteria, index) => (
+                  <motion.div
+                    key={criteria}
+                    className="flex items-start space-x-3 group cursor-pointer"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    whileHover={{ x: 5 }}
                   >
-                    Download Brochure
-                  </Button>
+                    <div
+                      className="w-6 h-6 rounded-full flex items-center justify-center mt-0.5 flex-shrink-0 transition-all duration-300"
+                      style={{
+                        backgroundColor: "hsl(142, 76%, 36%)",
+                        color: "hsl(0, 0%, 98%)",
+                      }}
+                    >
+                      <CheckCircle size={14} />
+                    </div>
+                    <span
+                      className="text-lg transition-colors duration-200"
+                      style={{ color: "hsl(140, 8%, 15%)" }}
+                    >
+                      {criteria}
+                    </span>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <Card className="border-0 shadow-2xl overflow-hidden relative">
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, hsl(140, 60%, 20%) 0%, hsl(140, 60%, 20%) 50%, hsl(140, 70%, 15%) 100%)",
+                  }}
+                />
+                <div className="absolute inset-0 opacity-10">
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: `radial-gradient(circle at 25% 25%, hsl(45, 85%, 65%) 2px, transparent 2px), 
+                                     radial-gradient(circle at 75% 75%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
+                      backgroundSize: "50px 50px, 30px 30px",
+                    }}
+                  />
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+
+                <CardContent className="p-12 relative z-10">
+                  <motion.h3
+                    className="font-serif text-3xl font-bold mb-6"
+                    style={{ color: "hsl(0, 0%, 98%)" }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                  >
+                    Ready to Explore Opportunities?
+                  </motion.h3>
+
+                  <motion.p
+                    className="text-lg mb-8 leading-relaxed"
+                    style={{ color: "hsla(0, 0%, 98%, 0.9)" }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                  >
+                    Contact us to discuss how our investment services can help
+                    you achieve your financial goals and contribute to
+                    Ghana&apos;s growth.
+                  </motion.p>
+
+                  <motion.div
+                    className="space-y-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <Button
+                        size="lg"
+                        className="w-full px-6 py-4 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                        style={{
+                          backgroundColor: "hsl(45, 85%, 65%)",
+                          color: "hsl(140, 8%, 15%)",
+                        }}
+                      >
+                        <Calendar className="mr-2" size={20} />
+                        Schedule Consultation
+                        <ArrowRight className="ml-2" size={20} />
+                      </Button>
+                    </motion.div>
+
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        className="w-full px-6 py-4 text-lg font-medium rounded-xl transition-all duration-300"
+                        style={{
+                          borderColor: "hsla(0, 0%, 98%, 0.3)",
+                          color: "hsl(0, 0%, 98%)",
+                          backgroundColor: "transparent",
+                        }}
+                        onMouseEnter={(
+                          e: React.MouseEvent<HTMLButtonElement>
+                        ) => {
+                          const target = e.currentTarget;
+                          target.style.backgroundColor =
+                            "hsla(0, 0%, 98%, 0.1)";
+                          target.style.borderColor = "hsl(0, 0%, 98%)";
+                        }}
+                        onMouseLeave={(
+                          e: React.MouseEvent<HTMLButtonElement>
+                        ) => {
+                          const target = e.currentTarget;
+                          target.style.backgroundColor = "transparent";
+                          target.style.borderColor = "hsla(0, 0%, 98%, 0.3)";
+                        }}
+                      >
+                        <Download className="mr-2" size={20} />
+                        Download Brochure
+                      </Button>
+                    </motion.div>
+                  </motion.div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
     </div>

@@ -1,239 +1,475 @@
+"use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Target, Eye, Heart, Users, Globe, ArrowRight } from "lucide-react";
+import {
+  Target,
+  Eye,
+  Heart,
+  Users,
+  Globe,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
+import { motion, Variants } from "framer-motion";
+import { useState } from "react";
 
 const About = () => {
+  const [hoveredValue, setHoveredValue] = useState<number | null>(null);
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.6, -0.05, 0.01, 0.99],
+      },
+    },
+  };
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.95, y: 20 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.6, -0.05, 0.01, 0.99],
+      },
+    },
+    hover: {
+      y: -8,
+      scale: 1.02,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const iconVariants: Variants = {
+    rest: { rotate: 0, scale: 1 },
+    hover: {
+      rotate: 360,
+      scale: 1.1,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   const values = [
     {
       icon: Target,
       title: "Excellence",
       description:
         "We strive for the highest standards in all our investments and partnerships.",
+      color: "hsl(142, 76%, 36%)",
+      gradient:
+        "linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(140, 60%, 20%) 100%)",
     },
     {
       icon: Heart,
       title: "Integrity",
       description:
         "Transparent, honest, and ethical business practices guide every decision we make.",
+      color: "hsl(25, 60%, 55%)",
+      gradient:
+        "linear-gradient(135deg, hsl(25, 60%, 55%) 0%, hsl(20, 70%, 45%) 100%)",
     },
     {
       icon: Users,
       title: "Community",
       description:
         "Building strong relationships and supporting local communities across Ghana.",
+      color: "hsl(210, 70%, 50%)",
+      gradient:
+        "linear-gradient(135deg, hsl(210, 70%, 50%) 0%, hsl(220, 60%, 45%) 100%)",
     },
     {
       icon: Globe,
       title: "Sustainability",
       description:
         "Long-term thinking that benefits both investors and the environment.",
-    },
-  ];
-
-  const milestones = [
-    {
-      year: "2009",
-      title: "Company Founded",
-      description:
-        "Started with a vision to transform agricultural investment in Ghana.",
-    },
-    {
-      year: "2012",
-      title: "First Major Farm",
-      description:
-        "Acquired 500 hectares of farmland for large-scale crop production.",
-    },
-    {
-      year: "2015",
-      title: "Poultry Expansion",
-      description:
-        "Launched modern poultry farming operations with international standards.",
-    },
-    {
-      year: "2018",
-      title: "Real Estate Entry",
-      description: "Began student housing projects near major universities.",
-    },
-    {
-      year: "2021",
-      title: "Digital Innovation",
-      description:
-        "Implemented smart farming technologies and digital investment platforms.",
-    },
-    {
-      year: "2024",
-      title: "Regional Leadership",
-      description:
-        "Recognized as Ghana's leading diversified investment company.",
+      color: "hsl(280, 70%, 50%)",
+      gradient:
+        "linear-gradient(135deg, hsl(280, 70%, 50%) 0%, hsl(270, 60%, 45%) 100%)",
     },
   ];
 
   return (
-    <div className="pt-8">
+    <div className="relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="fixed inset-0 opacity-[0.02] pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, hsl(45, 85%, 65%) 2px, transparent 2px), 
+                           radial-gradient(circle at 75% 75%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
+            backgroundSize: "60px 60px, 40px 40px",
+          }}
+        />
+      </div>
+
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-primary/5 to-accent/5">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="font-heading text-5xl md:text-6xl font-bold mb-6">
-              About
-              <span className="text-gradient-primary"> Our Story</span>
-            </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+      <section
+        className="relative pt-32 pb-24"
+        style={{
+          background:
+            "linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(140, 10%, 98%) 100%)",
+        }}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          <motion.div
+            className="max-w-4xl mx-auto text-center"
+            initial="hidden"
+            animate="visible"
+            variants={containerVariants}
+          >
+            <motion.div variants={itemVariants}>
+              <div
+                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-8"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(45, 85%, 65%) 0%, hsl(25, 60%, 55%) 100%)",
+                  color: "hsl(140, 8%, 15%)",
+                }}
+              >
+                <Sparkles size={16} />
+                <span className="font-medium text-sm">Our Company Story</span>
+              </div>
+            </motion.div>
+
+            <motion.h1
+              className="font-serif text-5xl md:text-7xl font-bold mb-8 leading-tight"
+              style={{ color: "hsl(140, 8%, 15%)" }}
+              variants={itemVariants}
+            >
+              About{" "}
+              <span
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(140, 60%, 20%), hsl(25, 60%, 55%))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                Our Story
+              </span>
+            </motion.h1>
+
+            <motion.p
+              className="text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto"
+              style={{ color: "hsl(140, 5%, 45%)" }}
+              variants={itemVariants}
+            >
               From humble beginnings to becoming Ghana&apos;s premier
               diversified investment company, our journey has been driven by a
               commitment to excellence, innovation, and sustainable growth for
               all stakeholders.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
       {/* Mission & Vision */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <Card className="border-0 shadow-soft hover-lift">
-              <CardContent className="p-12">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center mb-6">
-                  <Target className="w-8 h-8 text-white" />
-                </div>
-                <h2 className="font-heading text-3xl font-bold mb-4">
-                  Our Mission
-                </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  To create sustainable wealth and prosperity through strategic
-                  investments in Ghana&apos;s agricultural, real estate, and
-                  emerging sectors while fostering community development and
-                  environmental stewardship.
-                </p>
-              </CardContent>
-            </Card>
+      <section
+        className="relative py-24"
+        style={{
+          background:
+            "linear-gradient(135deg, hsl(140, 10%, 96%) 0%, hsl(0, 0%, 100%) 100%)",
+        }}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          <motion.div
+            className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <motion.div variants={cardVariants} whileHover="hover">
+              <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group h-full">
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(140, 60%, 20%) 100%)",
+                  }}
+                />
+                <CardContent className="p-12 relative">
+                  <motion.div
+                    className="w-16 h-16 rounded-xl flex items-center justify-center mb-6"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(140, 60%, 20%) 100%)",
+                      color: "hsl(0, 0%, 98%)",
+                    }}
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  >
+                    <Target size={32} />
+                  </motion.div>
+                  <h2
+                    className="font-serif text-3xl font-bold mb-4"
+                    style={{ color: "hsl(140, 8%, 15%)" }}
+                  >
+                    Our Mission
+                  </h2>
+                  <p
+                    className="text-lg leading-relaxed"
+                    style={{ color: "hsl(140, 5%, 45%)" }}
+                  >
+                    To create sustainable wealth and prosperity through
+                    strategic investments in Ghana&apos;s agricultural, real
+                    estate, and emerging sectors while fostering community
+                    development and environmental stewardship.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card className="border-0 shadow-soft hover-lift">
-              <CardContent className="p-12">
-                <div className="w-16 h-16 bg-gradient-to-br from-secondary to-accent rounded-xl flex items-center justify-center mb-6">
-                  <Eye className="w-8 h-8 text-white" />
-                </div>
-                <h2 className="font-heading text-3xl font-bold mb-4">
-                  Our Vision
-                </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  To be West Africa&apos;s leading diversified investment
-                  company, recognized for innovation, sustainability, and
-                  positive impact on communities while delivering exceptional
-                  returns to our investors.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+            <motion.div variants={cardVariants} whileHover="hover">
+              <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group h-full">
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, hsl(25, 60%, 55%) 0%, hsl(20, 70%, 45%) 100%)",
+                  }}
+                />
+                <CardContent className="p-12 relative">
+                  <motion.div
+                    className="w-16 h-16 rounded-xl flex items-center justify-center mb-6"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, hsl(25, 60%, 55%) 0%, hsl(20, 70%, 45%) 100%)",
+                      color: "hsl(0, 0%, 98%)",
+                    }}
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  >
+                    <Eye size={32} />
+                  </motion.div>
+                  <h2
+                    className="font-serif text-3xl font-bold mb-4"
+                    style={{ color: "hsl(140, 8%, 15%)" }}
+                  >
+                    Our Vision
+                  </h2>
+                  <p
+                    className="text-lg leading-relaxed"
+                    style={{ color: "hsl(140, 5%, 45%)" }}
+                  >
+                    To be West Africa&apos;s leading diversified investment
+                    company, recognized for innovation, sustainability, and
+                    positive impact on communities while delivering exceptional
+                    returns to our investors.
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Core Values */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-              Our Core
-              <span className="text-gradient-primary"> Values</span>
-            </h2>
-            <p className="text-xl text-muted-foreground">
+      <section
+        className="relative py-24"
+        style={{ backgroundColor: "hsl(140, 10%, 96%)" }}
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <motion.div
+            className="text-center max-w-3xl mx-auto mb-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={containerVariants}
+          >
+            <motion.div variants={itemVariants}>
+              <div
+                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-6"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(45, 85%, 65%) 0%, hsl(25, 60%, 55%) 100%)",
+                  color: "hsl(140, 8%, 15%)",
+                }}
+              >
+                <Heart size={16} />
+                <span className="font-medium text-sm">Core Values</span>
+              </div>
+            </motion.div>
+
+            <motion.h2
+              className="font-serif text-4xl md:text-6xl font-bold mb-6"
+              style={{ color: "hsl(140, 8%, 15%)" }}
+              variants={itemVariants}
+            >
+              Our Core{" "}
+              <span
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(140, 60%, 20%), hsl(25, 60%, 55%))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                Values
+              </span>
+            </motion.h2>
+
+            <motion.p
+              className="text-xl"
+              style={{ color: "hsl(140, 5%, 45%)" }}
+              variants={itemVariants}
+            >
               The principles that guide our decisions and shape our company
               culture.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value) => (
-              <Card
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            {values.map((value, index) => (
+              <motion.div
                 key={value.title}
-                className="border-0 shadow-soft hover-lift text-center"
+                variants={cardVariants}
+                whileHover="hover"
+                onHoverStart={() => setHoveredValue(index)}
+                onHoverEnd={() => setHoveredValue(null)}
               >
-                <CardContent className="p-8">
-                  <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-6">
-                    <value.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="font-heading text-xl font-bold mb-4">
-                    {value.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {value.description}
-                  </p>
-                </CardContent>
-              </Card>
+                <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full">
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
+                    style={{ background: value.gradient }}
+                  />
+                  <CardContent className="p-8 relative h-full flex flex-col justify-center">
+                    <motion.div
+                      className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
+                      style={{
+                        background: value.gradient,
+                        color: "hsl(0, 0%, 98%)",
+                      }}
+                      variants={iconVariants}
+                      initial="rest"
+                      animate={hoveredValue === index ? "hover" : "rest"}
+                    >
+                      <value.icon size={24} />
+                    </motion.div>
+                    <h3
+                      className="font-serif text-xl font-bold mb-4"
+                      style={{ color: "hsl(140, 8%, 15%)" }}
+                    >
+                      {value.title}
+                    </h3>
+                    <p
+                      className="leading-relaxed"
+                      style={{ color: "hsl(140, 5%, 45%)" }}
+                    >
+                      {value.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Company Timeline */}
-      <section className="section-padding">
-        <div className="container-custom">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-              Our Growth
-              <span className="text-gradient-primary"> Journey</span>
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Key milestones that have shaped our company&apos;s evolution and
-              success.
-            </p>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-8">
-              {milestones.map((milestone, index) => (
+      {/* Leadership CTA */}
+      <section className="relative py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={itemVariants}
+          >
+            <Card className="border-0 shadow-2xl overflow-hidden relative">
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(140, 60%, 20%) 0%, hsl(140, 60%, 20%) 50%, hsl(140, 70%, 15%) 100%)",
+                }}
+              />
+              <div className="absolute inset-0 opacity-10">
                 <div
-                  key={(milestone.year, index)}
-                  className="flex flex-col md:flex-row items-start gap-6"
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-20 h-20 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">
-                        {milestone.year}
-                      </span>
-                    </div>
-                  </div>
-                  <Card className="flex-1 border-0 shadow-soft hover-lift">
-                    <CardContent className="p-8">
-                      <h3 className="font-heading text-2xl font-bold mb-2">
-                        {milestone.title}
-                      </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {milestone.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+                  className="absolute inset-0"
+                  style={{
+                    backgroundImage: `radial-gradient(circle at 25% 25%, hsl(45, 85%, 65%) 2px, transparent 2px), 
+                                   radial-gradient(circle at 75% 75%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
+                    backgroundSize: "50px 50px, 30px 30px",
+                  }}
+                />
+              </div>
 
-      {/* Leadership Intro */}
-      <section className="section-padding bg-muted/30">
-        <div className="container-custom">
-          <Card className="bg-gradient-to-r from-primary to-accent text-primary-foreground border-0">
-            <CardContent className="p-16 text-center">
-              <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-                Meet Our Leadership Team
-              </h2>
-              <p className="text-xl text-primary-foreground/90 mb-8 max-w-3xl mx-auto">
-                Experienced professionals with deep expertise in agriculture,
-                finance, real estate, and business development, committed to
-                driving our vision forward.
-              </p>
-              <Button
-                size="lg"
-                variant="secondary"
-                className="px-8 py-4 text-lg"
-              >
-                View Team Members
-                <ArrowRight className="ml-2" size={20} />
-              </Button>
-            </CardContent>
-          </Card>
+              <CardContent className="p-16 text-center relative z-10">
+                <motion.h2
+                  className="font-serif text-4xl md:text-5xl font-bold mb-6"
+                  style={{ color: "hsl(0, 0%, 98%)" }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  Meet Our Leadership Team
+                </motion.h2>
+
+                <motion.p
+                  className="text-xl mb-8 max-w-3xl mx-auto leading-relaxed"
+                  style={{ color: "hsla(0, 0%, 98%, 0.9)" }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                  Experienced professionals with deep expertise in agriculture,
+                  finance, real estate, and business development, committed to
+                  driving our vision forward.
+                </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button
+                      size="lg"
+                      className="px-8 py-4 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                      style={{
+                        backgroundColor: "hsl(45, 85%, 65%)",
+                        color: "hsl(140, 8%, 15%)",
+                      }}
+                    >
+                      View Team Members
+                      <ArrowRight className="ml-2" size={20} />
+                    </Button>
+                  </motion.div>
+                </motion.div>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </section>
     </div>
