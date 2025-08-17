@@ -67,8 +67,7 @@ export const cardVariants: Variants = {
     },
   },
   hover: {
-    y: -8,
-    scale: 1.01,
+    scale: 1.03,
     transition: {
       duration: 0.4,
       ease: "easeOut",
@@ -103,8 +102,7 @@ export const iconVariants: Variants = {
   },
 };
 
-
 export const stepVariants: Variants = {
-    rest: { scale: 1 },
-    hover: { scale: 1.1, transition: { duration: 0.3, ease: "easeOut" } },
-  };
+  rest: { scale: 1 },
+  hover: { scale: 1.1, transition: { duration: 0.3, ease: "easeOut" } },
+};

@@ -1,6 +1,6 @@
 "use client";
 import Hero from "@/components/Hero";
-import Services from "@/components/Services";
+import ServiceCard from "@/components/ServiceCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Quote, Star, ArrowRight, CheckCircle, Sparkles } from "lucide-react";
@@ -15,6 +15,8 @@ import {
 } from "./data/motion-variants";
 import { testimonials } from "./data/testimonials";
 import { achievements } from "./data/achievements";
+import { services } from "./data/services";
+import CTA from "@/components/CTA";
 
 const features = [
   "Agricultural Innovation",
@@ -30,6 +32,18 @@ const Index = () => {
   const [hoveredTestimonial, setHoveredTestimonial] = useState<number | null>(
     null
   );
+  const [hoveredService, setHoveredService] = useState<number | null>(null);
+
+  const handleServiceHoverStart = (index: number) => {
+    setHoveredService(index);
+  };
+
+  const handleServiceHoverEnd = () => {
+    setHoveredService(null);
+  };
+
+  // Show only first 3 services
+  const featuredServices = services.slice(0, 3);
 
   return (
     <div className="relative overflow-hidden">
@@ -210,7 +224,127 @@ const Index = () => {
         </div>
       </section>
 
-      <Services />
+      {/* Featured Services Section */}
+      <section
+        className="relative py-24"
+        style={{
+          background:
+            "linear-gradient(135deg, hsl(140, 10%, 96%) 0%, hsl(0, 0%, 100%) 100%)",
+        }}
+      >
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-[0.015] pointer-events-none">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 20% 30%, hsl(45, 85%, 65%) 1.5px, transparent 1.5px), 
+                             radial-gradient(circle at 80% 70%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
+              backgroundSize: "80px 80px, 60px 60px",
+            }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          {/* Section Header */}
+          <motion.div
+            className="text-center max-w-4xl mx-auto mb-20"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={containerVariants}
+          >
+            <motion.div variants={itemVariants}>
+              <div
+                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-6"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(45, 85%, 65%) 0%, hsl(25, 60%, 55%) 100%)",
+                  color: "hsl(140, 8%, 15%)",
+                }}
+              >
+                <Sparkles size={16} />
+                <span className="font-medium text-sm">
+                  Our Investment Sectors
+                </span>
+              </div>
+            </motion.div>
+
+            <motion.h2
+              className="font-serif text-4xl md:text-6xl font-bold mb-6 leading-tight"
+              style={{ color: "hsl(140, 8%, 15%)" }}
+              variants={itemVariants}
+            >
+              Diversified Investment{" "}
+              <span
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(140, 60%, 20%), hsl(25, 60%, 55%))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                Opportunities
+              </span>
+            </motion.h2>
+
+            <motion.p
+              className="text-xl leading-relaxed"
+              style={{ color: "hsl(140, 5%, 45%)" }}
+              variants={itemVariants}
+            >
+              We operate across multiple high-growth sectors in Ghana, providing
+              diversified investment opportunities that drive sustainable
+              economic development and create lasting value for our partners.
+            </motion.p>
+          </motion.div>
+
+          {/* Featured Services Grid */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
+            {featuredServices.map((service, index) => (
+              <ServiceCard
+                key={service.id}
+                service={service}
+                index={index}
+                hoveredService={hoveredService}
+                onHoverStart={handleServiceHoverStart}
+                onHoverEnd={handleServiceHoverEnd}
+              />
+            ))}
+          </motion.div>
+
+          {/* See All Services Button */}
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                size="lg"
+                className="px-10 py-4 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(140, 60%, 20%) 0%, hsl(25, 60%, 55%) 100%)",
+                  color: "hsl(0, 0%, 98%)",
+                  border: "none",
+                }}
+              >
+                See All Services
+                <ArrowRight className="ml-2" size={20} />
+              </Button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Testimonials */}
       <section
@@ -365,104 +499,7 @@ const Index = () => {
             viewport={{ once: true, amount: 0.3 }}
             variants={itemVariants}
           >
-            <Card className="border-0 shadow-2xl overflow-hidden relative">
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg, hsl(140, 60%, 20%) 0%, hsl(140, 60%, 20%) 50%, hsl(140, 70%, 15%) 100%)",
-                }}
-              />
-              <div className="absolute inset-0 opacity-10">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage: `radial-gradient(circle at 25% 25%, hsl(45, 85%, 65%) 2px, transparent 2px), 
-                                   radial-gradient(circle at 75% 75%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
-                    backgroundSize: "50px 50px, 30px 30px",
-                  }}
-                />
-              </div>
-
-              <CardContent className="p-16 text-center relative z-10">
-                <motion.h2
-                  className="font-serif text-4xl md:text-6xl font-bold mb-6"
-                  style={{ color: "hsl(0, 0%, 98%)" }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                  Ready to Grow with Ghana&apos;s Future?
-                </motion.h2>
-
-                <motion.p
-                  className="text-xl mb-8 max-w-3xl mx-auto leading-relaxed"
-                  style={{ color: "hsla(0, 0%, 98%, 0.9)" }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                >
-                  Join us in creating sustainable wealth through strategic
-                  investments in Ghana&apos;s most promising sectors.
-                </motion.p>
-
-                <motion.div
-                  className="flex flex-col sm:flex-row gap-6 justify-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      size="lg"
-                      className="px-8 py-4 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                      style={{
-                        backgroundColor: "hsl(45, 85%, 65%)",
-                        color: "hsl(140, 8%, 15%)",
-                      }}
-                    >
-                      Explore Opportunities
-                      <ArrowRight className="ml-2" size={20} />
-                    </Button>
-                  </motion.div>
-
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="px-8 py-4 text-lg font-medium rounded-xl transition-all duration-300"
-                      style={{
-                        borderColor: "hsla(0, 0%, 98%, 0.3)",
-                        color: "hsl(0, 0%, 98%)",
-                        backgroundColor: "transparent",
-                      }}
-                      onMouseEnter={(
-                        e: React.MouseEvent<HTMLButtonElement>
-                      ) => {
-                        const target = e.currentTarget;
-                        target.style.backgroundColor = "hsla(0, 0%, 98%, 0.1)";
-                        target.style.borderColor = "hsl(0, 0%, 98%)";
-                      }}
-                      onMouseLeave={(
-                        e: React.MouseEvent<HTMLButtonElement>
-                      ) => {
-                        const target = e.currentTarget;
-                        target.style.backgroundColor = "transparent";
-                        target.style.borderColor = "hsla(0, 0%, 98%, 0.3)";
-                      }}
-                    >
-                      Schedule Consultation
-                    </Button>
-                  </motion.div>
-                </motion.div>
-              </CardContent>
-            </Card>
+            <CTA />
           </motion.div>
         </div>
       </section>

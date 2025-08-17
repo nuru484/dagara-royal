@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { MapPin, Phone, Send, Calendar, Sparkles } from "lucide-react";
+import { MapPin, Send, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import {
@@ -14,6 +14,7 @@ import {
   cardVariants,
 } from "../data/motion-variants";
 import { quickActions, contactInfo, officeLocations } from "../data/contact";
+import CTA from "@/components/CTA";
 
 const Contact = () => {
   const [hoveredAction, setHoveredAction] = useState<number | null>(null);
@@ -623,107 +624,7 @@ const Contact = () => {
             viewport={{ once: true, amount: 0.3 }}
             variants={itemVariants}
           >
-            <Card className="border-0 shadow-2xl overflow-hidden relative">
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg, hsl(140, 60%, 20%) 0%, hsl(140, 60%, 20%) 50%, hsl(140, 70%, 15%) 100%)",
-                }}
-              />
-              <div className="absolute inset-0 opacity-10">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage: `radial-gradient(circle at 25% 25%, hsl(45, 85%, 65%) 2px, transparent 2px), 
-                                   radial-gradient(circle at 75% 75%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
-                    backgroundSize: "50px 50px, 30px 30px",
-                  }}
-                />
-              </div>
-
-              <CardContent className="p-16 text-center relative z-10">
-                <motion.h2
-                  className="font-serif text-4xl md:text-5xl font-bold mb-6"
-                  style={{ color: "hsl(0, 0%, 98%)" }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                  Ready to Start Your Investment Journey?
-                </motion.h2>
-
-                <motion.p
-                  className="text-xl mb-10 max-w-3xl mx-auto leading-relaxed"
-                  style={{ color: "hsla(0, 0%, 98%, 0.9)" }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                >
-                  Our team of experts is ready to help you explore the best
-                  investment opportunities in Ghana&apos;s growing economy.
-                  Let&apos;s build your future together.
-                </motion.p>
-
-                <motion.div
-                  className="flex flex-col sm:flex-row gap-6 justify-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      size="lg"
-                      className="px-10 py-4 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                      style={{
-                        backgroundColor: "hsl(45, 85%, 65%)",
-                        color: "hsl(140, 8%, 15%)",
-                        border: "none",
-                      }}
-                    >
-                      Schedule Consultation
-                      <Calendar className="ml-2" size={20} />
-                    </Button>
-                  </motion.div>
-
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="px-10 py-4 text-lg font-medium rounded-xl transition-all duration-300"
-                      style={{
-                        borderColor: "hsla(0, 0%, 98%, 0.3)",
-                        color: "hsl(0, 0%, 98%)",
-                        backgroundColor: "transparent",
-                      }}
-                      onMouseEnter={(
-                        e: React.MouseEvent<HTMLButtonElement>
-                      ) => {
-                        const target = e.currentTarget;
-                        target.style.backgroundColor = "hsla(0, 0%, 98%, 0.1)";
-                        target.style.borderColor = "hsl(0, 0%, 98%)";
-                      }}
-                      onMouseLeave={(
-                        e: React.MouseEvent<HTMLButtonElement>
-                      ) => {
-                        const target = e.currentTarget;
-                        target.style.backgroundColor = "transparent";
-                        target.style.borderColor = "hsla(0, 0%, 98%, 0.3)";
-                      }}
-                    >
-                      Call Us Now
-                      <Phone className="ml-2" size={20} />
-                    </Button>
-                  </motion.div>
-                </motion.div>
-              </CardContent>
-            </Card>
+            <CTA />
           </motion.div>
         </div>
       </section>

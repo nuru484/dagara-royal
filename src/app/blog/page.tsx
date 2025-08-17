@@ -1,43 +1,24 @@
 "use client";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Calendar,
-  User,
-  ArrowRight,
-  Search,
-  Filter,
-  Sparkles,
-  BookOpen,
-} from "lucide-react";
+import { Search, Filter, Sparkles, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import {
-  containerVariants,
-  itemVariants,
-  cardVariants,
-  imageVariants,
-} from "../data/motion-variants";
+import { containerVariants, itemVariants } from "../data/motion-variants";
 import { blogPosts, categories } from "../data/blog";
+import BlogCard from "@/components/BlogCard";
+import CTA from "@/components/CTA";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [hoveredPost, setHoveredPost] = useState<number | null>(null);
 
-  const getCategoryColor = (category: string) => {
-    const colors: Record<string, { bg: string; text: string }> = {
-      Agriculture: { bg: "hsl(142, 76%, 36%)", text: "hsl(0, 0%, 98%)" },
-      "Real Estate": { bg: "hsl(210, 70%, 50%)", text: "hsl(0, 0%, 98%)" },
-      Poultry: { bg: "hsl(25, 60%, 55%)", text: "hsl(0, 0%, 98%)" },
-      Investment: { bg: "hsl(280, 70%, 50%)", text: "hsl(0, 0%, 98%)" },
-      Community: { bg: "hsl(340, 70%, 50%)", text: "hsl(0, 0%, 98%)" },
-      Technology: { bg: "hsl(240, 70%, 50%)", text: "hsl(0, 0%, 98%)" },
-    };
-    return (
-      colors[category] || { bg: "hsl(140, 5%, 45%)", text: "hsl(0, 0%, 98%)" }
-    );
-  };
+  const filteredPosts = blogPosts.filter(
+    (post) => selectedCategory === "All" || post.category === selectedCategory
+  );
+
+  const featuredPost = blogPosts.find((post) => post.featured);
+  const regularPosts = filteredPosts.filter((post) => !post.featured);
 
   return (
     <div className="relative overflow-hidden">
@@ -205,140 +186,47 @@ const Blog = () => {
       </section>
 
       {/* Featured Post */}
-      <section
-        className="relative py-24"
-        style={{
-          background:
-            "linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(140, 10%, 98%) 100%)",
-        }}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <motion.div
-            className="mb-12"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={containerVariants}
-          >
-            <motion.div variants={itemVariants}>
-              <div
-                className="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-6"
-                style={{
-                  background:
-                    "linear-gradient(135deg, hsl(45, 85%, 65%) 0%, hsl(25, 60%, 55%) 100%)",
-                  color: "hsl(140, 8%, 15%)",
-                }}
-              >
-                <Sparkles size={16} />
-                <span className="font-medium text-sm">Featured Article</span>
-              </div>
-            </motion.div>
-            <motion.h2
-              className="font-serif text-4xl md:text-5xl font-bold mb-8"
-              style={{ color: "hsl(140, 8%, 15%)" }}
-              variants={itemVariants}
+      {featuredPost && (
+        <section
+          className="relative py-24"
+          style={{
+            background:
+              "linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(140, 10%, 98%) 100%)",
+          }}
+        >
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <motion.div
+              className="mb-12"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={containerVariants}
             >
-              Editor&apos;s Pick
-            </motion.h2>
-            {blogPosts
-              .filter((post) => post.featured)
-              .map((post) => (
-                <motion.div
-                  key={post.id}
-                  variants={cardVariants}
-                  whileHover="hover"
+              <motion.div variants={itemVariants}>
+                <div
+                  className="inline-flex items-center space-x-2 px-4 py-2 rounded-full mb-6"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, hsl(45, 85%, 65%) 0%, hsl(25, 60%, 55%) 100%)",
+                    color: "hsl(140, 8%, 15%)",
+                  }}
                 >
-                  <Card className="overflow-hidden border-0 shadow-2xl group">
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, hsl(140, 60%, 20%), hsl(25, 60%, 55%))",
-                      }}
-                    />
-                    <div className="grid grid-cols-1 lg:grid-cols-2">
-                      <div className="aspect-[4/3] lg:aspect-auto overflow-hidden">
-                        <motion.img
-                          src={post.image}
-                          alt={post.title}
-                          className="w-full h-full object-cover"
-                          variants={imageVariants}
-                          initial="rest"
-                          whileHover="hover"
-                        />
-                      </div>
-                      <CardContent className="p-12 flex flex-col justify-center relative">
-                        <motion.div
-                          className="w-fit mb-4 px-3 py-1 rounded-full text-sm font-medium"
-                          style={{
-                            backgroundColor: getCategoryColor(post.category).bg,
-                            color: getCategoryColor(post.category).text,
-                          }}
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          {post.category}
-                        </motion.div>
-                        <h3
-                          className="font-serif text-3xl font-bold mb-4 leading-tight"
-                          style={{ color: "hsl(140, 8%, 15%)" }}
-                        >
-                          {post.title}
-                        </h3>
-                        <p
-                          className="text-lg leading-relaxed mb-6"
-                          style={{ color: "hsl(140, 5%, 45%)" }}
-                        >
-                          {post.excerpt}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-4 text-sm">
-                            <div className="flex items-center space-x-2">
-                              <User
-                                className="w-4 h-4"
-                                style={{ color: "hsl(140, 5%, 45%)" }}
-                              />
-                              <span style={{ color: "hsl(140, 5%, 45%)" }}>
-                                {post.author}
-                              </span>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <Calendar
-                                className="w-4 h-4"
-                                style={{ color: "hsl(140, 5%, 45%)" }}
-                              />
-                              <span style={{ color: "hsl(140, 5%, 45%)" }}>
-                                {post.date}
-                              </span>
-                            </div>
-                            <span style={{ color: "hsl(140, 5%, 45%)" }}>
-                              {post.readTime}
-                            </span>
-                          </div>
-                          <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <Button
-                              className="group/btn shadow-lg"
-                              style={{
-                                backgroundColor: "hsl(140, 60%, 20%)",
-                                color: "hsl(0, 0%, 98%)",
-                                border: "none",
-                              }}
-                            >
-                              Read More
-                              <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                            </Button>
-                          </motion.div>
-                        </div>
-                      </CardContent>
-                    </div>
-                  </Card>
-                </motion.div>
-              ))}
-          </motion.div>
-        </div>
-      </section>
+                  <Sparkles size={16} />
+                  <span className="font-medium text-sm">Featured Article</span>
+                </div>
+              </motion.div>
+              <motion.h2
+                className="font-serif text-4xl md:text-5xl font-bold mb-8"
+                style={{ color: "hsl(140, 8%, 15%)" }}
+                variants={itemVariants}
+              >
+                Editor&apos;s Pick
+              </motion.h2>
+              <BlogCard post={featuredPost} isFeatured={true} />
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* Blog Grid */}
       <section
@@ -380,106 +268,16 @@ const Blog = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
           >
-            {blogPosts
-              .filter((post) => !post.featured)
-              .map((post, index) => (
-                <motion.div
-                  key={post.id}
-                  variants={cardVariants}
-                  whileHover="hover"
-                  onMouseEnter={() => setHoveredPost(index)}
-                  onMouseLeave={() => setHoveredPost(null)}
-                >
-                  <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 group h-full bg-white">
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-[0.02] transition-opacity duration-500"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, hsl(140, 60%, 20%), hsl(25, 60%, 55%))",
-                      }}
-                    />
-
-                    <div className="aspect-[4/3] overflow-hidden">
-                      <motion.img
-                        src={post.image}
-                        alt={post.title}
-                        className="w-full h-full object-cover"
-                        variants={imageVariants}
-                        initial="rest"
-                        animate={hoveredPost === index ? "hover" : "rest"}
-                      />
-                    </div>
-
-                    <CardContent className="p-6 relative">
-                      <motion.div
-                        className="w-fit mb-3 px-3 py-1 rounded-full text-sm font-medium"
-                        style={{
-                          backgroundColor: getCategoryColor(post.category).bg,
-                          color: getCategoryColor(post.category).text,
-                        }}
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        {post.category}
-                      </motion.div>
-
-                      <h3
-                        className="font-serif text-xl font-bold mb-3 leading-tight line-clamp-2"
-                        style={{ color: "hsl(140, 8%, 15%)" }}
-                      >
-                        {post.title}
-                      </h3>
-
-                      <p
-                        className="leading-relaxed mb-4 line-clamp-3"
-                        style={{ color: "hsl(140, 5%, 45%)" }}
-                      >
-                        {post.excerpt}
-                      </p>
-
-                      <div className="flex items-center justify-between text-sm mb-4">
-                        <div className="flex items-center space-x-2">
-                          <User
-                            className="w-4 h-4"
-                            style={{ color: "hsl(140, 5%, 45%)" }}
-                          />
-                          <span style={{ color: "hsl(140, 5%, 45%)" }}>
-                            {post.author}
-                          </span>
-                        </div>
-                        <span style={{ color: "hsl(140, 5%, 45%)" }}>
-                          {post.readTime}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <div className="flex items-center space-x-2 text-sm">
-                          <Calendar
-                            className="w-4 h-4"
-                            style={{ color: "hsl(140, 5%, 45%)" }}
-                          />
-                          <span style={{ color: "hsl(140, 5%, 45%)" }}>
-                            {post.date}
-                          </span>
-                        </div>
-                        <motion.div
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="group/btn p-0 h-auto font-medium text-sm"
-                            style={{ color: "hsl(140, 60%, 20%)" }}
-                          >
-                            Read More
-                            <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
-                          </Button>
-                        </motion.div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+            {regularPosts.map((post, index) => (
+              <BlogCard
+                key={post.id}
+                post={post}
+                index={index}
+                hoveredPost={hoveredPost}
+                onMouseEnter={() => setHoveredPost(index)}
+                onMouseLeave={() => setHoveredPost(null)}
+              />
+            ))}
           </motion.div>
 
           {/* Load More */}
@@ -507,7 +305,7 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Newsletter Signup */}
+      {/* CTA Section */}
       <section className="relative py-24">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <motion.div
@@ -516,83 +314,7 @@ const Blog = () => {
             viewport={{ once: true, amount: 0.3 }}
             variants={itemVariants}
           >
-            <Card className="border-0 shadow-2xl overflow-hidden relative">
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg, hsl(140, 60%, 20%) 0%, hsl(140, 60%, 20%) 50%, hsl(140, 70%, 15%) 100%)",
-                }}
-              />
-              <div className="absolute inset-0 opacity-10">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage: `radial-gradient(circle at 25% 25%, hsl(45, 85%, 65%) 2px, transparent 2px), 
-                                   radial-gradient(circle at 75% 75%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
-                    backgroundSize: "50px 50px, 30px 30px",
-                  }}
-                />
-              </div>
-
-              <CardContent className="p-16 text-center relative z-10">
-                <motion.h2
-                  className="font-serif text-4xl md:text-5xl font-bold mb-6"
-                  style={{ color: "hsl(0, 0%, 98%)" }}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                >
-                  Stay Informed
-                </motion.h2>
-
-                <motion.p
-                  className="text-xl mb-10 max-w-3xl mx-auto leading-relaxed"
-                  style={{ color: "hsla(0, 0%, 98%, 0.9)" }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                >
-                  Subscribe to our newsletter and never miss important updates
-                  about investment opportunities, market insights, and company
-                  news.
-                </motion.p>
-
-                <motion.div
-                  className="max-w-md mx-auto flex flex-col sm:flex-row gap-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.6 }}
-                >
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="h-12 border-0 shadow-lg"
-                    style={{
-                      backgroundColor: "hsla(0, 0%, 98%, 0.15)",
-                      color: "hsl(0, 0%, 98%)",
-                      borderColor: "hsla(0, 0%, 98%, 0.3)",
-                    }}
-                  />
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      size="lg"
-                      className="px-8 h-12 font-medium shadow-lg hover:shadow-xl transition-all duration-300"
-                      style={{
-                        backgroundColor: "hsl(45, 85%, 65%)",
-                        color: "hsl(140, 8%, 15%)",
-                        border: "none",
-                      }}
-                    >
-                      Subscribe
-                    </Button>
-                  </motion.div>
-                </motion.div>
-              </CardContent>
-            </Card>
+            <CTA />
           </motion.div>
         </div>
       </section>
