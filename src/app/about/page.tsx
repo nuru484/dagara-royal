@@ -17,18 +17,6 @@ const About = () => {
 
   return (
     <div className="relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="fixed inset-0 opacity-[0.02] pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, hsl(45, 85%, 65%) 2px, transparent 2px), 
-                           radial-gradient(circle at 75% 75%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
-            backgroundSize: "60px 60px, 40px 40px",
-          }}
-        />
-      </div>
-
       {/* Hero Section */}
       <section
         className="relative pt-32 pb-24"
@@ -63,7 +51,7 @@ const About = () => {
               style={{ color: "hsl(140, 8%, 15%)" }}
               variants={itemVariants}
             >
-              About{" "}
+              About
               <span
                 style={{
                   background:
@@ -149,7 +137,10 @@ const About = () => {
             </motion.div>
 
             <motion.div variants={cardVariants} whileHover="hover">
-              <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group h-full">
+              <Card
+                className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group h-full"
+                style={{ willChange: "transform" }}
+              >
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
                   style={{
@@ -263,7 +254,10 @@ const About = () => {
                 onHoverStart={() => setHoveredValue(index)}
                 onHoverEnd={() => setHoveredValue(null)}
               >
-                <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full">
+                <Card
+                  style={{ willChange: "transform" }}
+                  className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full"
+                >
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
                     style={{ background: value.gradient }}

@@ -6,215 +6,28 @@ import {
   Mail,
   Users,
   Award,
-  GraduationCap,
-  TrendingUp,
   Sparkles,
   ArrowRight,
   FileUser,
   Search,
 } from "lucide-react";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
+import {
+  containerVariants,
+  itemVariants,
+  cardVariants,
+  iconVariants,
+  imageVariants,
+} from "../data/motion-variants";
+import { teamMembers, departments } from "../data/team";
 
 const Team = () => {
   const [hoveredMember, setHoveredMember] = useState<number | null>(null);
   const [hoveredDepartment, setHoveredDepartment] = useState<number | null>(
     null
   );
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-  };
-
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95, y: 20 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-    hover: {
-      y: -8,
-      scale: 1.02,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const iconVariants: Variants = {
-    rest: { rotate: 0, scale: 1 },
-    hover: {
-      rotate: 360,
-      scale: 1.1,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  const imageVariants: Variants = {
-    rest: { scale: 1 },
-    hover: {
-      scale: 1.05,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-  };
-
-  const teamMembers = [
-    {
-      name: "Kwame Nkrumah Asante",
-      position: "Chief Executive Officer",
-      department: "Executive Leadership",
-      bio: "With over 20 years of experience in agricultural finance and investment management, Kwame leads our strategic vision for sustainable growth across Ghana's emerging markets.",
-      education: "MBA Finance, University of Ghana Business School",
-      expertise: [
-        "Strategic Planning",
-        "Agricultural Investment",
-        "Market Development",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-      color: "hsl(142, 76%, 36%)",
-    },
-    {
-      name: "Akosua Mensah",
-      position: "Chief Financial Officer",
-      department: "Finance & Operations",
-      bio: "Akosua brings 15 years of financial expertise from leading investment firms, specializing in portfolio management and risk assessment for agricultural investments.",
-      education: "CFA, MSc Accounting & Finance, KNUST",
-      expertise: [
-        "Portfolio Management",
-        "Financial Analysis",
-        "Risk Management",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b187?w=400&h=400&fit=crop&crop=face",
-      color: "hsl(25, 60%, 55%)",
-    },
-    {
-      name: "Dr. Emmanuel Boateng",
-      position: "Head of Agricultural Development",
-      department: "Operations",
-      bio: "Dr. Boateng is an agricultural scientist with extensive experience in sustainable farming practices and crop optimization across West African markets.",
-      education: "PhD Agricultural Science, University of Cape Coast",
-      expertise: [
-        "Sustainable Farming",
-        "Crop Science",
-        "Technology Integration",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-      color: "hsl(210, 70%, 50%)",
-    },
-    {
-      name: "Nana Ama Osei",
-      position: "Real Estate Development Director",
-      department: "Real Estate",
-      bio: "Nana leads our real estate portfolio with focus on student housing and commercial properties, bringing 12 years of property development experience.",
-      education: "MSc Real Estate Development, University of Reading",
-      expertise: [
-        "Property Development",
-        "Project Management",
-        "Market Analysis",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face",
-      color: "hsl(280, 70%, 50%)",
-    },
-    {
-      name: "Samuel Adjei",
-      position: "Head of Business Development",
-      department: "Strategy",
-      bio: "Samuel focuses on identifying new investment opportunities and building strategic partnerships to expand our market presence across Ghana.",
-      education: "MBA Strategic Management, GIMPA",
-      expertise: [
-        "Business Development",
-        "Partnership Strategy",
-        "Market Expansion",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&crop=face",
-      color: "hsl(340, 70%, 50%)",
-    },
-    {
-      name: "Grace Addo",
-      position: "Head of Human Resources",
-      department: "People & Culture",
-      bio: "Grace leads our people strategy, ensuring we attract and retain top talent while building a culture of excellence and innovation.",
-      education: "MSc Human Resource Management, University of Ghana",
-      expertise: [
-        "Talent Management",
-        "Organizational Development",
-        "Employee Relations",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1559941452-6d5b0a4a3e7f?w=400&h=400&fit=crop&crop=face",
-      color: "hsl(190, 70%, 50%)",
-    },
-  ];
-
-  const departments = [
-    {
-      icon: Users,
-      name: "Executive Leadership",
-      description: "Strategic direction and overall company vision",
-      count: 2,
-      color: "hsl(142, 76%, 36%)",
-      gradient:
-        "linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(140, 60%, 20%) 100%)",
-    },
-    {
-      icon: TrendingUp,
-      name: "Finance & Operations",
-      description: "Financial management and operational excellence",
-      count: 4,
-      color: "hsl(25, 60%, 55%)",
-      gradient:
-        "linear-gradient(135deg, hsl(25, 60%, 55%) 0%, hsl(20, 70%, 45%) 100%)",
-    },
-    {
-      icon: GraduationCap,
-      name: "Agricultural Development",
-      description: "Farming innovation and agricultural expertise",
-      count: 8,
-      color: "hsl(210, 70%, 50%)",
-      gradient:
-        "linear-gradient(135deg, hsl(210, 70%, 50%) 0%, hsl(220, 60%, 45%) 100%)",
-    },
-    {
-      icon: Award,
-      name: "Real Estate",
-      description: "Property development and management",
-      count: 6,
-      color: "hsl(280, 70%, 50%)",
-      gradient:
-        "linear-gradient(135deg, hsl(280, 70%, 50%) 0%, hsl(270, 60%, 45%) 100%)",
-    },
-  ];
 
   return (
     <div className="relative overflow-hidden">
@@ -366,7 +179,10 @@ const Team = () => {
                 onHoverStart={() => setHoveredDepartment(index)}
                 onHoverEnd={() => setHoveredDepartment(null)}
               >
-                <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full">
+                <Card
+                  style={{ willChange: "transform" }}
+                  className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full"
+                >
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
                     style={{ background: dept.gradient }}
@@ -487,7 +303,10 @@ const Team = () => {
                 onHoverStart={() => setHoveredMember(index)}
                 onHoverEnd={() => setHoveredMember(null)}
               >
-                <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group h-full bg-white">
+                <Card
+                  style={{ willChange: "transform" }}
+                  className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group h-full bg-white"
+                >
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-[0.02] transition-opacity duration-500"
                     style={{ backgroundColor: member.color }}

@@ -345,7 +345,7 @@ const Footer = () => {
           >
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <p className="text-sm" style={{ color: "hsla(0, 0%, 98%, 0.8)" }}>
-                © 2024 Dagara Royal Company LTD. All rights reserved.
+                © 2025 Dagara Royal Company LTD. All rights reserved.
               </p>
               <div className="flex space-x-8 text-sm">
                 <Link

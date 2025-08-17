@@ -15,6 +15,7 @@ import {
 } from "../data/motion-variants";
 import { quickActions, contactInfo, officeLocations } from "../data/contact";
 import CTA from "@/components/CTA";
+import Map from "@/components/Map";
 
 const Contact = () => {
   const [hoveredAction, setHoveredAction] = useState<number | null>(null);
@@ -120,7 +121,10 @@ const Contact = () => {
                 onMouseEnter={() => setHoveredAction(index)}
                 onMouseLeave={() => setHoveredAction(null)}
               >
-                <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full bg-white">
+                <Card
+                  style={{ willChange: "transform" }}
+                  className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full bg-white"
+                >
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
                     style={{ background: action.gradient }}
@@ -375,7 +379,10 @@ const Contact = () => {
                     onMouseEnter={() => setHoveredInfo(index)}
                     onMouseLeave={() => setHoveredInfo(null)}
                   >
-                    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group bg-white">
+                    <Card
+                      style={{ willChange: "transform" }}
+                      className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group bg-white"
+                    >
                       <div
                         className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
                         style={{ background: info.gradient }}
@@ -498,7 +505,10 @@ const Contact = () => {
                 onMouseEnter={() => setHoveredLocation(index)}
                 onMouseLeave={() => setHoveredLocation(null)}
               >
-                <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full bg-white">
+                <Card
+                  style={{ willChange: "transform" }}
+                  className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full bg-white"
+                >
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
                     style={{ background: office.gradient }}
@@ -559,75 +569,7 @@ const Contact = () => {
       </section>
 
       {/* Map Section */}
-      <section
-        className="relative py-24"
-        style={{ backgroundColor: "hsl(140, 10%, 96%)" }}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={itemVariants}
-          >
-            <Card className="border-0 shadow-2xl overflow-hidden">
-              <div
-                className="aspect-[21/9] flex items-center justify-center relative"
-                style={{
-                  background:
-                    "linear-gradient(135deg, hsl(140, 60%, 20%) 0%, hsl(140, 60%, 20%) 50%, hsl(140, 70%, 15%) 100%)",
-                }}
-              >
-                <div className="absolute inset-0 opacity-10">
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage: `radial-gradient(circle at 25% 25%, hsl(45, 85%, 65%) 2px, transparent 2px), 
-                                     radial-gradient(circle at 75% 75%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
-                      backgroundSize: "50px 50px, 30px 30px",
-                    }}
-                  />
-                </div>
-                <div className="text-center relative z-10">
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <MapPin
-                      className="mx-auto mb-4"
-                      size={64}
-                      style={{ color: "hsl(45, 85%, 65%)" }}
-                    />
-                  </motion.div>
-                  <h3
-                    className="font-serif text-3xl font-bold mb-2"
-                    style={{ color: "hsl(0, 0%, 98%)" }}
-                  >
-                    Interactive Map
-                  </h3>
-                  <p style={{ color: "hsla(0, 0%, 98%, 0.8)" }}>
-                    Google Maps integration would be displayed here
-                  </p>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative py-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={itemVariants}
-          >
-            <CTA />
-          </motion.div>
-        </div>
-      </section>
+      <Map />
     </div>
   );
 };

@@ -285,7 +285,10 @@ const ServicesPage = () => {
                 onHoverStart={() => setHoveredBenefit(index)}
                 onHoverEnd={() => setHoveredBenefit(null)}
               >
-                <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full">
+                <Card
+                  style={{ willChange: "transform" }}
+                  className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group text-center h-full"
+                >
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
                     style={{ background: benefit.gradient }}
@@ -397,7 +400,10 @@ const ServicesPage = () => {
                 onHoverStart={() => setHoveredProcess(index)}
                 onHoverEnd={() => setHoveredProcess(null)}
               >
-                <Card className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group h-full">
+                <Card
+                  style={{ willChange: "transform" }}
+                  className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group h-full"
+                >
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-500"
                     style={{ backgroundColor: process.color }}
