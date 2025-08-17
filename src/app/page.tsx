@@ -4,8 +4,24 @@ import Services from "@/components/Services";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Quote, Star, ArrowRight, CheckCircle, Sparkles } from "lucide-react";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
+import {
+  numberVariants,
+  quoteVariants,
+  containerVariants,
+  itemVariants,
+  cardVariants,
+} from "./data/motion-variants";
+import { testimonials } from "./data/testimonials";
+import { achievements } from "./data/achievements";
+
+const features = [
+  "Agricultural Innovation",
+  "Sustainable Practices",
+  "Community Development",
+  "Strategic Partnerships",
+];
 
 const Index = () => {
   const [hoveredAchievement, setHoveredAchievement] = useState<number | null>(
@@ -14,109 +30,6 @@ const Index = () => {
   const [hoveredTestimonial, setHoveredTestimonial] = useState<number | null>(
     null
   );
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-  };
-
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95, y: 20 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-    hover: {
-      y: -8,
-      scale: 1.02,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const numberVariants: Variants = {
-    rest: { scale: 1 },
-    hover: { scale: 1.1, transition: { duration: 0.3, ease: "easeOut" } },
-  };
-
-  const quoteVariants: Variants = {
-    rest: { rotate: 0 },
-    hover: { rotate: 360, transition: { duration: 0.6, ease: "easeOut" } },
-  };
-
-  const testimonials = [
-    {
-      name: "Dr. Kwame Asante",
-      position: "Agricultural Economist",
-      company: "University of Ghana",
-      content:
-        "Dagara Royal Company has transformed agricultural investments in our region. Their modern farming techniques and sustainable practices have increased yields by 40%.",
-      rating: 5,
-    },
-    {
-      name: "Sarah Mensah",
-      position: "Real Estate Developer",
-      company: "Accra Properties Ltd",
-      content:
-        "Their student housing projects are exemplary. Quality construction, strategic locations, and excellent management make them a reliable investment partner.",
-      rating: 5,
-    },
-    {
-      name: "John Osei",
-      position: "Poultry Farm Owner",
-      company: "Golden Farms",
-      content:
-        "Working with Dagara Royal on our poultry expansion was seamless. Their expertise in modern farming systems helped us double our production capacity.",
-      rating: 5,
-    },
-  ];
-
-  const achievements = [
-    {
-      number: "15+",
-      label: "Years of Excellence",
-      color: "hsl(140, 60%, 20%)",
-    },
-    { number: "₵50M+", label: "Total Investments", color: "hsl(45, 85%, 65%)" },
-    {
-      number: "200+",
-      label: "Successful Projects",
-      color: "hsl(25, 60%, 55%)",
-    },
-    { number: "5000+", label: "Jobs Created", color: "hsl(142, 76%, 36%)" },
-  ];
-
-  const features = [
-    "Agricultural Innovation",
-    "Sustainable Practices",
-    "Community Development",
-    "Strategic Partnerships",
-  ];
 
   return (
     <div className="relative overflow-hidden">
@@ -132,7 +45,6 @@ const Index = () => {
         />
       </div>
 
-      {/* Hero Section */}
       <Hero />
 
       {/* Company Overview */}
@@ -298,7 +210,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Services Preview */}
       <Services />
 
       {/* Testimonials */}
@@ -333,7 +244,7 @@ const Index = () => {
               style={{ color: "hsl(140, 8%, 15%)" }}
               variants={itemVariants}
             >
-              What Our{" "}
+              What Our
               <span
                 style={{
                   background:

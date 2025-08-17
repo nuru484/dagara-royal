@@ -1,70 +1,14 @@
+// src/components/Footer.tsx
 "use client";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-  ArrowRight,
-  Building2,
-  Users,
-  TrendingUp,
-} from "lucide-react";
+import { MapPin, Phone, Mail, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import { itemVariants, containerVariants } from "@/app/data/motion-variants";
+import { socialIcons, quickLinks, services } from "@/app/data/Footer";
 
 const Footer = () => {
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-  };
-
-  const socialIcons = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-  ];
-
-  const quickLinks = [
-    { label: "Home", href: "/" },
-    { label: "About Us", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Team", href: "/team" },
-    { label: "Blog", href: "/blog" },
-    { label: "Contact", href: "/contact" },
-  ];
-
-  const services = [
-    { icon: Building2, label: "Agricultural Investments" },
-    { icon: Users, label: "Poultry Farming" },
-    { icon: TrendingUp, label: "Student Real Estate" },
-    { icon: Building2, label: "Property Development" },
-    { icon: Users, label: "Investment Consulting" },
-  ];
-
   return (
     <footer
       className="relative overflow-hidden"

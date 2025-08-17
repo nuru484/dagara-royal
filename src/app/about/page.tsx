@@ -1,112 +1,19 @@
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Target,
-  Eye,
-  Heart,
-  Users,
-  Globe,
-  ArrowRight,
-  Sparkles,
-} from "lucide-react";
-import { motion, Variants } from "framer-motion";
+import { Target, Eye, Heart, ArrowRight, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 import { useState } from "react";
+import {
+  containerVariants,
+  itemVariants,
+  cardVariants,
+  iconVariants,
+} from "../data/motion-variants";
+import { aboutUsValues } from "../data/aboutUs";
 
 const About = () => {
   const [hoveredValue, setHoveredValue] = useState<number | null>(null);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-  };
-
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95, y: 20 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-    hover: {
-      y: -8,
-      scale: 1.02,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const iconVariants: Variants = {
-    rest: { rotate: 0, scale: 1 },
-    hover: {
-      rotate: 360,
-      scale: 1.1,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  const values = [
-    {
-      icon: Target,
-      title: "Excellence",
-      description:
-        "We strive for the highest standards in all our investments and partnerships.",
-      color: "hsl(142, 76%, 36%)",
-      gradient:
-        "linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(140, 60%, 20%) 100%)",
-    },
-    {
-      icon: Heart,
-      title: "Integrity",
-      description:
-        "Transparent, honest, and ethical business practices guide every decision we make.",
-      color: "hsl(25, 60%, 55%)",
-      gradient:
-        "linear-gradient(135deg, hsl(25, 60%, 55%) 0%, hsl(20, 70%, 45%) 100%)",
-    },
-    {
-      icon: Users,
-      title: "Community",
-      description:
-        "Building strong relationships and supporting local communities across Ghana.",
-      color: "hsl(210, 70%, 50%)",
-      gradient:
-        "linear-gradient(135deg, hsl(210, 70%, 50%) 0%, hsl(220, 60%, 45%) 100%)",
-    },
-    {
-      icon: Globe,
-      title: "Sustainability",
-      description:
-        "Long-term thinking that benefits both investors and the environment.",
-      color: "hsl(280, 70%, 50%)",
-      gradient:
-        "linear-gradient(135deg, hsl(280, 70%, 50%) 0%, hsl(270, 60%, 45%) 100%)",
-    },
-  ];
 
   return (
     <div className="relative overflow-hidden">
@@ -285,7 +192,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Core Values */}
+      {/* Core aboutUsValues */}
       <section
         className="relative py-24"
         style={{ backgroundColor: "hsl(140, 10%, 96%)" }}
@@ -308,7 +215,7 @@ const About = () => {
                 }}
               >
                 <Heart size={16} />
-                <span className="font-medium text-sm">Core Values</span>
+                <span className="font-medium text-sm">Core aboutUsValues</span>
               </div>
             </motion.div>
 
@@ -327,7 +234,7 @@ const About = () => {
                   backgroundClip: "text",
                 }}
               >
-                Values
+                aboutUsValues
               </span>
             </motion.h2>
 
@@ -348,7 +255,7 @@ const About = () => {
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
           >
-            {values.map((value, index) => (
+            {aboutUsValues.map((value, index) => (
               <motion.div
                 key={value.title}
                 variants={cardVariants}

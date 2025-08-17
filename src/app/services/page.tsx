@@ -5,171 +5,30 @@ import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
   CheckCircle,
-  TrendingUp,
-  Users,
   Award,
   Target,
   Sparkles,
   Download,
   Calendar,
 } from "lucide-react";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
+import {
+  containerVariants,
+  itemVariants,
+  cardVariants,
+  iconVariants,
+  stepVariants,
+} from "../data/motion-variants";
+import {
+  benefits,
+  investmentProcess,
+  investmentCriteria,
+} from "../data/services";
 
 const ServicesPage = () => {
   const [hoveredBenefit, setHoveredBenefit] = useState<number | null>(null);
   const [hoveredProcess, setHoveredProcess] = useState<number | null>(null);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-  };
-
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95, y: 20 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-    hover: {
-      y: -8,
-      scale: 1.02,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const iconVariants: Variants = {
-    rest: { rotate: 0, scale: 1 },
-    hover: {
-      rotate: 360,
-      scale: 1.1,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  const stepVariants: Variants = {
-    rest: { scale: 1 },
-    hover: { scale: 1.1, transition: { duration: 0.3, ease: "easeOut" } },
-  };
-
-  const benefits = [
-    {
-      icon: TrendingUp,
-      title: "Proven Returns",
-      description:
-        "Consistent growth with average annual returns of 12-15% across our investment portfolio.",
-      color: "hsl(142, 76%, 36%)",
-      gradient:
-        "linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(140, 60%, 20%) 100%)",
-    },
-    {
-      icon: Users,
-      title: "Expert Team",
-      description:
-        "Experienced professionals with decades of combined experience in their respective fields.",
-      color: "hsl(25, 60%, 55%)",
-      gradient:
-        "linear-gradient(135deg, hsl(25, 60%, 55%) 0%, hsl(20, 70%, 45%) 100%)",
-    },
-    {
-      icon: Award,
-      title: "Industry Recognition",
-      description:
-        "Multiple awards for innovation, sustainability, and excellence in investment management.",
-      color: "hsl(210, 70%, 50%)",
-      gradient:
-        "linear-gradient(135deg, hsl(210, 70%, 50%) 0%, hsl(220, 60%, 45%) 100%)",
-    },
-    {
-      icon: Target,
-      title: "Strategic Focus",
-      description:
-        "Targeted investments in high-growth sectors with strong fundamentals and market demand.",
-      color: "hsl(280, 70%, 50%)",
-      gradient:
-        "linear-gradient(135deg, hsl(280, 70%, 50%) 0%, hsl(270, 60%, 45%) 100%)",
-    },
-  ];
-
-  const investmentProcess = [
-    {
-      step: "01",
-      title: "Market Analysis",
-      description:
-        "Comprehensive research and analysis of market opportunities and trends.",
-      color: "hsl(142, 76%, 36%)",
-    },
-    {
-      step: "02",
-      title: "Due Diligence",
-      description:
-        "Thorough evaluation of potential investments, risks, and growth prospects.",
-      color: "hsl(25, 60%, 55%)",
-    },
-    {
-      step: "03",
-      title: "Strategic Planning",
-      description:
-        "Development of detailed investment strategies and implementation plans.",
-      color: "hsl(210, 70%, 50%)",
-    },
-    {
-      step: "04",
-      title: "Execution & Management",
-      description:
-        "Professional project management and ongoing performance monitoring.",
-      color: "hsl(280, 70%, 50%)",
-    },
-    {
-      step: "05",
-      title: "Value Creation",
-      description:
-        "Active management to maximize returns and create sustainable value.",
-      color: "hsl(340, 70%, 50%)",
-    },
-    {
-      step: "06",
-      title: "Exit Strategy",
-      description:
-        "Strategic exit planning to optimize returns for all stakeholders.",
-      color: "hsl(45, 85%, 65%)",
-    },
-  ];
-
-  const investmentCriteria = [
-    "Strong market fundamentals and growth potential",
-    "Sustainable business models with positive impact",
-    "Experienced management teams and local partnerships",
-    "Clear path to profitability and value creation",
-    "Alignment with Ghana's economic development goals",
-    "Environmental and social responsibility standards",
-  ];
 
   return (
     <div className="relative overflow-hidden">

@@ -1,35 +1,19 @@
+// src/components/Hero.tsx
 "use client";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { motion, AnimatePresence, cubicBezier } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { heroImages } from "@/app/data/hero";
+import {
+  textVariants,
+  containerVariants,
+  buttonVariants,
+} from "@/app/data/motion-variants";
 
 const Hero = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const heroImages = [
-    {
-      src: "/assets/hero-agriculture.jpg",
-      alt: "Modern Agricultural Farming in Ghana",
-      title: "Agricultural Excellence",
-    },
-    {
-      src: "/assets/hero-poultry.jpg",
-      alt: "Modern Poultry Farming Operations",
-      title: "Poultry Innovation",
-    },
-    {
-      src: "/assets/hero-real-estate.jpg",
-      alt: "Modern Student Housing Development",
-      title: "Real Estate Development",
-    },
-    {
-      src: "/assets/hero-investment.jpg",
-      alt: "Investment Portfolio Growth",
-      title: "Strategic Investments",
-    },
-  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -37,50 +21,7 @@ const Hero = () => {
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [heroImages.length]);
-
-  const textVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: cubicBezier(0.6, -0.05, 0.01, 0.99),
-      },
-    },
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const buttonVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: cubicBezier(0.6, -0.05, 0.01, 0.99),
-      },
-    },
-    hover: {
-      scale: 1.05,
-      transition: {
-        type: "spring" as const,
-        stiffness: 400,
-        damping: 10,
-      },
-    },
-  };
+  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">

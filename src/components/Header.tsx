@@ -1,23 +1,15 @@
+// src/components/Header.tsx
 "use client";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { navItems } from "@/app/data/header";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-
-  const navItems = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Services", href: "/services" },
-    { label: "Team", href: "/team" },
-    { label: "Blog", href: "/blog" },
-    { label: "Contact", href: "/contact" },
-  ];
-
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
@@ -165,7 +157,6 @@ const Header = () => {
         </div>
       </motion.header>
 
-      {/* Spacer to prevent content from going under fixed header */}
       <div className="h-20" />
     </>
   );

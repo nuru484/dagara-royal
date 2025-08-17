@@ -1,147 +1,21 @@
+// src/components/Services.tsx
+"use client";
 import { ArrowRight, Sparkles, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useRef } from "react";
+import {
+  containerVariants,
+  itemVariants,
+  cardVariants,
+  imageVariants,
+} from "@/app/data/motion-variants";
+import { services } from "@/app/data/services";
 
 const Services = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-  };
-
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95, y: 20 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.6, -0.05, 0.01, 0.99],
-      },
-    },
-    hover: {
-      y: -8,
-      scale: 1.01,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const imageVariants: Variants = {
-    rest: { scale: 1 },
-    hover: {
-      scale: 1.05,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-  };
-
-  const services = [
-    {
-      image:
-        "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&h=240&fit=crop&crop=center",
-      title: "Agricultural Investments",
-      description:
-        "Large-scale farming operations including maize, corn, millet, soya beans, and groundnuts using sustainable farming practices for maximum yield and environmental stewardship.",
-      features: [
-        "Crop Diversification Programs",
-        "Modern Precision Equipment",
-        "Sustainable Practices",
-        "Direct Market Access",
-      ],
-      gradient:
-        "linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(140, 60%, 20%) 100%)",
-      accentColor: "hsl(142, 76%, 36%)",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=400&h=240&fit=crop&crop=center",
-      title: "Poultry Farming",
-      description:
-        "Commercial poultry operations focused on egg production and broiler farming with state-of-the-art facilities and efficient management systems.",
-      features: [
-        "Climate-Controlled Facilities",
-        "Advanced Health Management",
-        "Optimized Feed Systems",
-        "Comprehensive Distribution",
-      ],
-      gradient:
-        "linear-gradient(135deg, hsl(25, 60%, 55%) 0%, hsl(20, 70%, 45%) 100%)",
-      accentColor: "hsl(25, 60%, 55%)",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=240&fit=crop&crop=center",
-      title: "Real Estate Development",
-      description:
-        "Strategic property investments and development projects focusing on student accommodation, commercial properties, and residential developments.",
-      features: [
-        "Premium Student Housing",
-        "Commercial Complexes",
-        "Full Property Management",
-        "Prime Strategic Locations",
-      ],
-      gradient:
-        "linear-gradient(135deg, hsl(210, 70%, 50%) 0%, hsl(220, 60%, 45%) 100%)",
-      accentColor: "hsl(210, 70%, 50%)",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=240&fit=crop&crop=center",
-      title: "Educational Infrastructure",
-      description:
-        "Development of world-class educational facilities and student housing near major universities and educational institutions across Ghana.",
-      features: [
-        "Modern Hostel Construction",
-        "Educational Facility Development",
-        "Comprehensive Student Services",
-        "Strategic Campus Partnerships",
-      ],
-      gradient:
-        "linear-gradient(135deg, hsl(280, 70%, 50%) 0%, hsl(270, 60%, 45%) 100%)",
-      accentColor: "hsl(280, 70%, 50%)",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=240&fit=crop&crop=center",
-      title: "Investment Consulting",
-      description:
-        "Strategic investment advisory services helping individuals and organizations build diversified portfolios and achieve sustainable growth.",
-      features: [
-        "Comprehensive Portfolio Analysis",
-        "Strategic Risk Assessment",
-        "Market Intelligence Research",
-        "Customized Investment Strategy",
-      ],
-      gradient:
-        "linear-gradient(135deg, hsl(240, 70%, 50%) 0%, hsl(250, 60%, 45%) 100%)",
-      accentColor: "hsl(240, 70%, 50%)",
-    },
-  ];
 
   const handleHoverStart = (index: number) => {
     if (hoverTimeoutRef.current) {
