@@ -28,7 +28,7 @@ export const teamMembers = [
       "Risk Management",
     ],
     image:
-      "https://images.unsplash.com/photo-1494790108755-2616b612b187?w=400&h=400&fit=crop&crop=face",
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face",
     color: "hsl(25, 60%, 55%)",
   },
   {
@@ -88,7 +88,7 @@ export const teamMembers = [
       "Employee Relations",
     ],
     image:
-      "https://images.unsplash.com/photo-1559941452-6d5b0a4a3e7f?w=400&h=400&fit=crop&crop=face",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
     color: "hsl(190, 70%, 50%)",
   },
 ];

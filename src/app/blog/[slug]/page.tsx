@@ -1,15 +1,18 @@
-import { blogPosts } from "@/app/data/blog";
-import BlogDetail from "@/components/BlogDetail";
+// src/app/blog/[slug]/page.tsx
+import BlogDetail from "@/components/blog/BlogDetail";
 import { notFound } from "next/navigation";
+import { getBlogPosts } from "../page";
 
 // Update the props interface to handle async params
 interface BlogDetailPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }
 
 const BlogDetailPage = async ({ params }: BlogDetailPageProps) => {
-  const { id } = await params;
-  const post = blogPosts.find((p) => p.id === parseInt(id));
+  const { slug } = await params;
+  const posts = await getBlogPosts();
+
+  const post = posts.find((p) => p.slug === slug);
 
   if (!post) {
     notFound();

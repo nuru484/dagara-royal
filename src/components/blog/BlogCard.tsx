@@ -1,3 +1,4 @@
+// src/components/blog/BlogCard.tsx
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -5,26 +6,14 @@ import { Calendar, User, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { cardVariants, imageVariants } from "@/app/data/motion-variants";
+import { IBlogPost } from "./BlogDetail";
 
-interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  author: string;
-  date: string;
-  category: string;
-  readTime: string;
-  image: string;
-  featured: boolean;
-  content?: string;
-}
-
-interface BlogCardProps {
-  post: BlogPost;
+interface IBlogCardProps {
+  post: IBlogPost;
   index?: number;
   hoveredPost?: number | null;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
+  onMouseEnter?: React.MouseEventHandler<HTMLElement>;
+  onMouseLeave?: React.MouseEventHandler<HTMLElement>;
   isFeatured?: boolean;
 }
 
@@ -35,7 +24,7 @@ const BlogCard = ({
   onMouseEnter,
   onMouseLeave,
   isFeatured = false,
-}: BlogCardProps) => {
+}: IBlogCardProps) => {
   const router = useRouter();
 
   const getCategoryColor = (category: string) => {
@@ -53,7 +42,7 @@ const BlogCard = ({
   };
 
   const handleCardClick = () => {
-    router.push(`/blog/${post.id}`);
+    router.push(`/blog/${post.slug}`);
   };
 
   if (isFeatured) {

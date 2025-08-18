@@ -183,8 +183,7 @@ Our real estate investments provide investors with both immediate cash flow thro
   },
   {
     id: "educational-infrastructure",
-    image:
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=240&fit=crop&crop=center",
+    image: "/assets/hero-real-estate.jpg",
     title: "Educational Infrastructure",
     description:
       "Development of world-class educational facilities and student housing near major universities and educational institutions across Ghana.",

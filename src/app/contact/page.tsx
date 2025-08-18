@@ -14,7 +14,6 @@ import {
   cardVariants,
 } from "../data/motion-variants";
 import { quickActions, contactInfo, officeLocations } from "../data/contact";
-import CTA from "@/components/CTA";
 import Map from "@/components/Map";
 
 const Contact = () => {

@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Calendar, User, ArrowLeft, Share2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import ReactMarkdown from "react-markdown";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { BLOCKS, INLINES, Document } from "@contentful/rich-text-types";
 
-interface BlogPost {
-  id: number;
+export interface IBlogPost {
+  id: string;
+  slug: string;
   title: string;
   excerpt: string;
   author: string;
@@ -17,11 +19,11 @@ interface BlogPost {
   readTime: string;
   image: string;
   featured: boolean;
-  content?: string;
+  content?: Document;
 }
 
 interface BlogDetailProps {
-  post: BlogPost;
+  post: IBlogPost;
 }
 
 const BlogDetail = ({ post }: BlogDetailProps) => {
@@ -54,24 +56,11 @@ const BlogDetail = ({ post }: BlogDetailProps) => {
       });
     } else {
       navigator.clipboard.writeText(window.location.href);
-      // You could add a toast notification here
     }
   };
 
   return (
     <div className="relative overflow-hidden min-h-screen">
-      {/* Background Pattern */}
-      <div className="fixed inset-0 opacity-[0.02] pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, hsl(45, 85%, 65%) 2px, transparent 2px), 
-                           radial-gradient(circle at 75% 75%, hsl(25, 60%, 55%) 1px, transparent 1px)`,
-            backgroundSize: "60px 60px, 40px 40px",
-          }}
-        />
-      </div>
-
       {/* Header Section */}
       <section
         className="relative pt-32 pb-16"
@@ -207,63 +196,67 @@ const BlogDetail = ({ post }: BlogDetailProps) => {
             <Card className="border-0 shadow-lg bg-white">
               <CardContent className="p-8 md:p-12">
                 <div className="prose prose-lg max-w-none">
-                  <ReactMarkdown
-                    components={{
-                      h1: ({ children }) => (
-                        <h1
-                          className="font-serif text-3xl md:text-4xl font-bold mb-6 mt-8 first:mt-0"
-                          style={{ color: "hsl(140, 8%, 15%)" }}
-                        >
-                          {children}
-                        </h1>
-                      ),
-                      h2: ({ children }) => (
-                        <h2
-                          className="font-serif text-2xl md:text-3xl font-bold mb-4 mt-8"
-                          style={{ color: "hsl(140, 8%, 15%)" }}
-                        >
-                          {children}
-                        </h2>
-                      ),
-                      h3: ({ children }) => (
-                        <h3
-                          className="font-serif text-xl md:text-2xl font-bold mb-3 mt-6"
-                          style={{ color: "hsl(140, 8%, 15%)" }}
-                        >
-                          {children}
-                        </h3>
-                      ),
-                      p: ({ children }) => (
-                        <p
-                          className="text-lg leading-relaxed mb-6"
-                          style={{ color: "hsl(140, 5%, 35%)" }}
-                        >
-                          {children}
-                        </p>
-                      ),
-                      ul: ({ children }) => (
-                        <ul
-                          className="list-disc pl-6 mb-6 space-y-2"
-                          style={{ color: "hsl(140, 5%, 35%)" }}
-                        >
-                          {children}
-                        </ul>
-                      ),
-                      li: ({ children }) => (
-                        <li className="text-lg leading-relaxed">{children}</li>
-                      ),
-                      strong: ({ children }) => (
-                        <strong
-                          className="font-semibold"
-                          style={{ color: "hsl(140, 8%, 15%)" }}
-                        >
-                          {children}
-                        </strong>
-                      ),
-                    }}
-                  >
-                    {post.content || "Content not available."}
-                  </ReactMarkdown>
+                  {post.content ? (
+                    documentToReactComponents(post.content, {
+                      renderNode: {
+                        [BLOCKS.HEADING_1]: (node, children) => (
+                          <h1
+                            className="font-serif text-3xl md:text-4xl font-bold mb-6 mt-8 first:mt-0"
+                            style={{ color: "hsl(140, 8%, 15%)" }}
+                          >
+                            {children}
+                          </h1>
+                        ),
+                        [BLOCKS.HEADING_2]: (node, children) => (
+                          <h2
+                            className="font-serif text-2xl md:text-3xl font-bold mb-4 mt-8"
+                            style={{ color: "hsl(140, 8%, 15%)" }}
+                          >
+                            {children}
+                          </h2>
+                        ),
+                        [BLOCKS.HEADING_3]: (node, children) => (
+                          <h3
+                            className="font-serif text-xl md:text-2xl font-bold mb-3 mt-6"
+                            style={{ color: "hsl(140, 8%, 15%)" }}
+                          >
+                            {children}
+                          </h3>
+                        ),
+                        [BLOCKS.PARAGRAPH]: (node, children) => (
+                          <p
+                            className="text-lg leading-relaxed mb-6"
+                            style={{ color: "hsl(140, 5%, 35%)" }}
+                          >
+                            {children}
+                          </p>
+                        ),
+                        [BLOCKS.UL_LIST]: (node, children) => (
+                          <ul
+                            className="list-disc pl-6 mb-6 space-y-2"
+                            style={{ color: "hsl(140, 5%, 35%)" }}
+                          >
+                            {children}
+                          </ul>
+                        ),
+                        [BLOCKS.LIST_ITEM]: (node, children) => (
+                          <li className="text-lg leading-relaxed">
+                            {children}
+                          </li>
+                        ),
+                        [INLINES.HYPERLINK]: (node, children) => (
+                          <a
+                            href={node.data.uri}
+                            className="text-blue-600 underline"
+                          >
+                            {children}
+                          </a>
+                        ),
+                      },
+                    })
+                  ) : (
+                    <p>Content not available.</p>
+                  )}
                 </div>
               </CardContent>
             </Card>
