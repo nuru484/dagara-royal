@@ -1,6 +1,5 @@
 import client from "@/lib/contentful";
 import BlogHero from "@/components/blog/BlogHero";
-import BlogCategories from "@/components/blog/BlogCategories";
 import BlogFeatured from "@/components/blog/BlogFeatured";
 import BlogGrid from "@/components/blog/BlogGrid";
 import CTA from "@/components/CTA";
@@ -34,8 +33,6 @@ export async function getBlogPosts(): Promise<IBlogPost[]> {
     const imageAsset = fields.image as Asset | undefined;
     const imageUrl = imageAsset?.fields?.file?.url;
 
-    console.log("Image URL: ", imageUrl);
-
     return {
       id: sys.id,
       title: fields.title,
@@ -62,7 +59,6 @@ const Blog = async () => {
   return (
     <div className="relative overflow-hidden">
       <BlogHero />
-      <BlogCategories />
       <BlogFeatured posts={posts} />
       <BlogGrid posts={posts} />
 
