@@ -42,7 +42,6 @@ const Index = () => {
     setHoveredService(null);
   };
 
-  // Show only first 3 services
   const featuredServices = services.slice(0, 3);
 
   return (

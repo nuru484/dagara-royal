@@ -2,7 +2,6 @@
 "use client";
 import { MapPin, Phone, Mail, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { itemVariants, containerVariants } from "@/app/data/motion-variants";
@@ -272,66 +271,6 @@ const Footer = () => {
                   <span style={{ color: "hsla(0, 0%, 98%, 0.9)" }}>
                     info@dagararoyal.com
                   </span>
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <h4
-                  className="font-medium mb-4"
-                  style={{ color: "hsl(45, 85%, 65%)" }}
-                >
-                  Stay Updated
-                </h4>
-                <div className="space-y-3">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="rounded-lg"
-                    style={{
-                      backgroundColor: "hsla(0, 0%, 98%, 0.1)",
-                      borderColor: "hsla(0, 0%, 98%, 0.3)",
-                      color: "hsl(0, 0%, 98%)",
-                    }}
-                    onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
-                      const target = e.currentTarget;
-                      target.style.borderColor = "hsl(45, 85%, 65%)";
-                      target.style.boxShadow =
-                        "0 0 0 2px hsla(45, 85%, 65%, 0.2)";
-                    }}
-                    onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
-                      const target = e.currentTarget;
-                      target.style.borderColor = "hsla(0, 0%, 98%, 0.3)";
-                      target.style.boxShadow = "none";
-                    }}
-                  />
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      className="w-full font-medium rounded-lg"
-                      size="sm"
-                      style={{
-                        backgroundColor: "hsl(45, 85%, 65%)",
-                        color: "hsl(140, 8%, 15%)",
-                      }}
-                      onMouseEnter={(
-                        e: React.MouseEvent<HTMLButtonElement>
-                      ) => {
-                        const target = e.currentTarget;
-                        target.style.backgroundColor = "hsl(45, 85%, 55%)";
-                      }}
-                      onMouseLeave={(
-                        e: React.MouseEvent<HTMLButtonElement>
-                      ) => {
-                        const target = e.currentTarget;
-                        target.style.backgroundColor = "hsl(45, 85%, 65%)";
-                      }}
-                    >
-                      Subscribe to Newsletter
-                      <ArrowRight size={16} className="ml-2" />
-                    </Button>
-                  </motion.div>
                 </div>
               </div>
             </motion.div>
